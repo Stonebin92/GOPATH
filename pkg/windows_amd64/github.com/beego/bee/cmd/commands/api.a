@@ -1,0 +1,792 @@
+!<arch>
+__.PKGDEF       0           0     0     644     29733     `
+go object windows amd64 go1.6.1 X:none
+build id "6aca829295e04f9ff0a54d1e769bfdc1e59cb29b"
+
+$$
+package apiapp
+	import fmt "fmt"
+	import os "os"
+	import filepath "path/filepath"
+	import strings "strings"
+	import commands "github.com/beego/bee/cmd/commands"
+	import utils "github.com/beego/bee/utils"
+	import version "github.com/beego/bee/cmd/commands/version"
+	import beeLogger "github.com/beego/bee/logger"
+	import generate "github.com/beego/bee/generate"
+	import flag "flag" // indirect
+	type @"flag".Value interface { Set(? string) (? error); String() (? string) }
+	type @"flag".Flag struct { Name string; Usage string; Value @"flag".Value; DefValue string }
+	type @"flag".ErrorHandling int
+	import io "io" // indirect
+	type @"io".Writer interface { Write(@"io".p []byte) (@"io".n int, @"io".err error) }
+	import time "time" // indirect
+	type @"time".Duration int64
+	func (@"time".dÂ·2 @"time".Duration) Hours () (? float64) { var @"time".hourÂ·3 @"time".Duration; ; @"time".hourÂ·3 = @"time".dÂ·2 / @"time".Duration(0x34630b8a000); var @"time".nsecÂ·4 @"time".Duration; ; @"time".nsecÂ·4 = @"time".dÂ·2 % @"time".Duration(0x34630b8a000); return float64(@"time".hourÂ·3) + float64(@"time".nsecÂ·4) * float64(8190022623310637111963488201822504381538623676021880892417778544696899264837610290203272971060556344039023584360473938041055625214280336402169897364226048p-553) }
+	func (@"time".dÂ·2 @"time".Duration) Minutes () (? float64) { var @"time".minÂ·3 @"time".Duration; ; @"time".minÂ·3 = @"time".dÂ·2 / @"time".Duration(0xdf8475800); var @"time".nsecÂ·4 @"time".Duration; ; @"time".nsecÂ·4 = @"time".dÂ·2 % @"time".Duration(0xdf8475800); return float64(@"time".minÂ·3) + float64(@"time".nsecÂ·4) * float64(7678146209353722106395056769533233877065564876941352542109479049699919628723768656821910653339403201031675627614471533358284117434246264392176261853609984p-547) }
+	func (@"time".dÂ·2 @"time".Duration) Nanoseconds () (? int64) { return int64(@"time".dÂ·2) }
+	func (@"time".dÂ·2 @"time".Duration) Seconds () (? float64) { var @"time".secÂ·3 @"time".Duration; ; @"time".secÂ·3 = @"time".dÂ·2 / @"time".Duration(0x3b9aca00); var @"time".nsecÂ·4 @"time".Duration; ; @"time".nsecÂ·4 = @"time".dÂ·2 % @"time".Duration(0x3b9aca00); return float64(@"time".secÂ·3) + float64(@"time".nsecÂ·4) * float64(7198262071269114660816079141112770740375861891461678802759824945047098083990024106014198994535558872472104883612039846078596891298747423852523262413111296p-541) }
+	func (@"time".dÂ·2 @"time".Duration) String () (? string)
+	type @"flag".FlagSet struct { Usage func(); @"flag".name string; @"flag".parsed bool; @"flag".actual map[string]*@"flag".Flag; @"flag".formal map[string]*@"flag".Flag; @"flag".args []string; @"flag".errorHandling @"flag".ErrorHandling; @"flag".output @"io".Writer }
+	func (@"flag".fÂ·2 *@"flag".FlagSet "esc:0x32") Arg (@"flag".iÂ·3 int) (? string) { if @"flag".iÂ·3 < int(0x0) || @"flag".iÂ·3 >= len(@"flag".fÂ·2.@"flag".args) { return string("") }; return @"flag".fÂ·2.@"flag".args[@"flag".iÂ·3] }
+	func (@"flag".fÂ·2 *@"flag".FlagSet "esc:0x22") Args () (? []string) { return @"flag".fÂ·2.@"flag".args }
+	func (@"flag".fÂ·2 *@"flag".FlagSet "esc:0x9") Bool (@"flag".nameÂ·3 string, @"flag".valueÂ·4 bool, @"flag".usageÂ·5 string) (? *bool)
+	func (@"flag".fÂ·1 *@"flag".FlagSet "esc:0x9") BoolVar (@"flag".pÂ·2 *bool, @"flag".nameÂ·3 string, @"flag".valueÂ·4 bool, @"flag".usageÂ·5 string)
+	func (@"flag".fÂ·2 *@"flag".FlagSet "esc:0x9") Duration (@"flag".nameÂ·3 string, @"flag".valueÂ·4 @"time".Duration, @"flag".usageÂ·5 string) (? *@"time".Duration)
+	func (@"flag".fÂ·1 *@"flag".FlagSet "esc:0x9") DurationVar (@"flag".pÂ·2 *@"time".Duration, @"flag".nameÂ·3 string, @"flag".valueÂ·4 @"time".Duration, @"flag".usageÂ·5 string)
+	func (@"flag".fÂ·2 *@"flag".FlagSet "esc:0x9") Float64 (@"flag".nameÂ·3 string, @"flag".valueÂ·4 float64, @"flag".usageÂ·5 string) (? *float64)
+	func (@"flag".fÂ·1 *@"flag".FlagSet "esc:0x9") Float64Var (@"flag".pÂ·2 *float64, @"flag".nameÂ·3 string, @"flag".valueÂ·4 float64, @"flag".usageÂ·5 string)
+	func (@"flag".fÂ·1 *@"flag".FlagSet "esc:0x1") Init (@"flag".nameÂ·2 string, @"flag".errorHandlingÂ·3 @"flag".ErrorHandling) { @"flag".fÂ·1.@"flag".name = @"flag".nameÂ·2; @"flag".fÂ·1.@"flag".errorHandling = @"flag".errorHandlingÂ·3 }
+	func (@"flag".fÂ·2 *@"flag".FlagSet "esc:0x9") Int (@"flag".nameÂ·3 string, @"flag".valueÂ·4 int, @"flag".usageÂ·5 string) (? *int)
+	func (@"flag".fÂ·2 *@"flag".FlagSet "esc:0x9") Int64 (@"flag".nameÂ·3 string, @"flag".valueÂ·4 int64, @"flag".usageÂ·5 string) (? *int64)
+	func (@"flag".fÂ·1 *@"flag".FlagSet "esc:0x9") Int64Var (@"flag".pÂ·2 *int64, @"flag".nameÂ·3 string, @"flag".valueÂ·4 int64, @"flag".usageÂ·5 string)
+	func (@"flag".fÂ·1 *@"flag".FlagSet "esc:0x9") IntVar (@"flag".pÂ·2 *int, @"flag".nameÂ·3 string, @"flag".valueÂ·4 int, @"flag".usageÂ·5 string)
+	func (@"flag".fÂ·2 *@"flag".FlagSet "esc:0x1") Lookup (@"flag".nameÂ·3 string "esc:0x1") (? *@"flag".Flag) { return @"flag".fÂ·2.@"flag".formal[@"flag".nameÂ·3] }
+	func (@"flag".fÂ·2 *@"flag".FlagSet "esc:0x1") NArg () (? int) { return len(@"flag".fÂ·2.@"flag".args) }
+	func (@"flag".fÂ·2 *@"flag".FlagSet "esc:0x1") NFlag () (? int) { return len(@"flag".fÂ·2.@"flag".actual) }
+	func (@"flag".fÂ·2 *@"flag".FlagSet "esc:0x9") Parse (@"flag".argumentsÂ·3 []string) (? error)
+	func (@"flag".fÂ·2 *@"flag".FlagSet "esc:0x1") Parsed () (? bool) { return @"flag".fÂ·2.@"flag".parsed }
+	func (@"flag".fÂ·1 *@"flag".FlagSet "esc:0x9") PrintDefaults ()
+	func (@"flag".fÂ·2 *@"flag".FlagSet "esc:0x1") Set (@"flag".nameÂ·3 string, @"flag".valueÂ·4 string) (? error)
+	func (@"flag".fÂ·1 *@"flag".FlagSet "esc:0x1") SetOutput (@"flag".outputÂ·2 @"io".Writer) { @"flag".fÂ·1.@"flag".output = @"flag".outputÂ·2 }
+	func (@"flag".fÂ·2 *@"flag".FlagSet "esc:0x9") String (@"flag".nameÂ·3 string, @"flag".valueÂ·4 string, @"flag".usageÂ·5 string) (? *string)
+	func (@"flag".fÂ·1 *@"flag".FlagSet "esc:0x9") StringVar (@"flag".pÂ·2 *string, @"flag".nameÂ·3 string, @"flag".valueÂ·4 string, @"flag".usageÂ·5 string)
+	func (@"flag".fÂ·2 *@"flag".FlagSet "esc:0x9") Uint (@"flag".nameÂ·3 string, @"flag".valueÂ·4 uint, @"flag".usageÂ·5 string) (? *uint)
+	func (@"flag".fÂ·2 *@"flag".FlagSet "esc:0x9") Uint64 (@"flag".nameÂ·3 string, @"flag".valueÂ·4 uint64, @"flag".usageÂ·5 string) (? *uint64)
+	func (@"flag".fÂ·1 *@"flag".FlagSet "esc:0x9") Uint64Var (@"flag".pÂ·2 *uint64, @"flag".nameÂ·3 string, @"flag".valueÂ·4 uint64, @"flag".usageÂ·5 string)
+	func (@"flag".fÂ·1 *@"flag".FlagSet "esc:0x9") UintVar (@"flag".pÂ·2 *uint, @"flag".nameÂ·3 string, @"flag".valueÂ·4 uint, @"flag".usageÂ·5 string)
+	func (@"flag".fÂ·1 *@"flag".FlagSet "esc:0x9") Var (@"flag".valueÂ·2 @"flag".Value, @"flag".nameÂ·3 string, @"flag".usageÂ·4 string)
+	func (@"flag".fÂ·1 *@"flag".FlagSet "esc:0x9") Visit (@"flag".fnÂ·2 func(? *@"flag".Flag) "esc:0x1")
+	func (@"flag".fÂ·1 *@"flag".FlagSet "esc:0x9") VisitAll (@"flag".fnÂ·2 func(? *@"flag".Flag) "esc:0x1")
+	func (@"flag".fÂ·2 *@"flag".FlagSet "esc:0x9") @"flag".failf (@"flag".formatÂ·3 string "esc:0x9", @"flag".aÂ·4 ...interface {} "esc:0x9") (? error)
+	func (@"flag".fÂ·2 *@"flag".FlagSet "esc:0x22") @"flag".out () (? @"io".Writer) { if @"flag".fÂ·2.@"flag".output == nil { return @"os".Stderr }; return @"flag".fÂ·2.@"flag".output }
+	func (@"flag".fÂ·3 *@"flag".FlagSet "esc:0x9") @"flag".parseOne () (? bool, ? error)
+	func (@"flag".fÂ·1 *@"flag".FlagSet "esc:0x9") @"flag".usage ()
+	type @"github.com/beego/bee/cmd/commands".Command struct { Run func(@"github.com/beego/bee/cmd/commands".cmd *@"github.com/beego/bee/cmd/commands".Command, @"github.com/beego/bee/cmd/commands".args []string) (? int); PreRun func(@"github.com/beego/bee/cmd/commands".cmd *@"github.com/beego/bee/cmd/commands".Command, @"github.com/beego/bee/cmd/commands".args []string); UsageLine string; Short string; Long string; Flag @"flag".FlagSet; CustomFlags bool; @"github.com/beego/bee/cmd/commands".output *@"io".Writer }
+	func (@"github.com/beego/bee/cmd/commands".cÂ·2 *@"github.com/beego/bee/cmd/commands".Command "esc:0x2a") Name () (? string)
+	func (@"github.com/beego/bee/cmd/commands".cÂ·2 *@"github.com/beego/bee/cmd/commands".Command "esc:0x9") Options () (? map[string]string)
+	func (@"github.com/beego/bee/cmd/commands".cÂ·2 *@"github.com/beego/bee/cmd/commands".Command "esc:0x32") Out () (? @"io".Writer) { if @"github.com/beego/bee/cmd/commands".cÂ·2.@"github.com/beego/bee/cmd/commands".output != nil { return *@"github.com/beego/bee/cmd/commands".cÂ·2.@"github.com/beego/bee/cmd/commands".output }; return @"github.com/beego/bee/logger/colors".NewColorWriter(@"os".Stderr) }
+	func (@"github.com/beego/bee/cmd/commands".cÂ·2 *@"github.com/beego/bee/cmd/commands".Command "esc:0x1") Runnable () (? bool) { return @"github.com/beego/bee/cmd/commands".cÂ·2.Run != nil }
+	func (@"github.com/beego/bee/cmd/commands".cÂ·1 *@"github.com/beego/bee/cmd/commands".Command "esc:0x1") SetOutput (@"github.com/beego/bee/cmd/commands".outputÂ·2 @"io".Writer) { @"github.com/beego/bee/cmd/commands".cÂ·1.@"github.com/beego/bee/cmd/commands".output = &@"github.com/beego/bee/cmd/commands".outputÂ·2 }
+	func (@"github.com/beego/bee/cmd/commands".cÂ·1 *@"github.com/beego/bee/cmd/commands".Command) Usage ()
+	var @"".CmdApiapp *@"github.com/beego/bee/cmd/commands".Command
+	var @"".APIModels string
+	var @"".APIModels2 string
+	func @"".init ()
+	import syscall "syscall" // indirect
+	type @"syscall".Handle uintptr
+	type @"syscall".Filetime struct { LowDateTime uint32; HighDateTime uint32 }
+	func (@"syscall".ftÂ·2 *@"syscall".Filetime "esc:0x1") Nanoseconds () (? int64) { var @"syscall".nsecÂ·3 int64; ; @"syscall".nsecÂ·3 = int64(@"syscall".ftÂ·2.HighDateTime) << uint(0x20) + int64(@"syscall".ftÂ·2.LowDateTime); @"syscall".nsecÂ·3 -= int64(0x19db1ded53e8000); @"syscall".nsecÂ·3 *= int64(0x64); return @"syscall".nsecÂ·3 }
+	type @"syscall".Win32finddata struct { FileAttributes uint32; CreationTime @"syscall".Filetime; LastAccessTime @"syscall".Filetime; LastWriteTime @"syscall".Filetime; FileSizeHigh uint32; FileSizeLow uint32; Reserved0 uint32; Reserved1 uint32; FileName [259]uint16; AlternateFileName [13]uint16 }
+	type @"os".dirInfo struct { @"os".data @"syscall".Win32finddata; @"os".needdata bool; @"os".path string; @"os".isempty bool }
+	import sync "sync" // indirect
+	type @"sync".Mutex struct { @"sync".state int32; @"sync".sema uint32 }
+	func (@"sync".mÂ·1 *@"sync".Mutex) Lock ()
+	func (@"sync".mÂ·1 *@"sync".Mutex) Unlock ()
+	type @"os".file struct { @"os".fd @"syscall".Handle; @"os".name string; @"os".dirinfo *@"os".dirInfo; @"os".l @"sync".Mutex; @"os".isConsole bool; @"os".lastbits []byte; @"os".readbuf []rune }
+	func (@"os".fileÂ·2 *@"os".file) @"os".close () (? error)
+	func (@"os".fÂ·2 *@"os".file "esc:0x1") @"os".isdir () (? bool) { return @"os".fÂ·2 != nil && @"os".fÂ·2.@"os".dirinfo != nil }
+	type @"os".FileMode uint32
+	func (@"os".mÂ·2 @"os".FileMode) IsDir () (? bool) { return @"os".mÂ·2 & @"os".FileMode(0x80000000) != @"os".FileMode(0x0) }
+	func (@"os".mÂ·2 @"os".FileMode) IsRegular () (? bool) { return @"os".mÂ·2 & @"os".FileMode(0x8f000000) == @"os".FileMode(0x0) }
+	func (@"os".mÂ·2 @"os".FileMode) Perm () (? @"os".FileMode) { return @"os".mÂ·2 & @"os".FileMode(0x1ff) }
+	func (@"os".mÂ·2 @"os".FileMode) String () (? string)
+	type @"time".zone struct { @"time".name string; @"time".offset int; @"time".isDST bool }
+	type @"time".zoneTrans struct { @"time".when int64; @"time".index uint8; @"time".isstd bool; @"time".isutc bool }
+	type @"time".Location struct { @"time".name string; @"time".zone []@"time".zone; @"time".tx []@"time".zoneTrans; @"time".cacheStart int64; @"time".cacheEnd int64; @"time".cacheZone *@"time".zone }
+	func (@"time".lÂ·2 *@"time".Location "esc:0x22") String () (? string)
+	func (@"time".lÂ·2 *@"time".Location "esc:0x1") @"time".firstZoneUsed () (? bool)
+	func (@"time".lÂ·2 *@"time".Location "esc:0x12") @"time".get () (? *@"time".Location)
+	func (@"time".lÂ·6 *@"time".Location "esc:0x32") @"time".lookup (@"time".secÂ·7 int64) (@"time".nameÂ·1 string, @"time".offsetÂ·2 int, @"time".isDSTÂ·3 bool, @"time".startÂ·4 int64, @"time".endÂ·5 int64)
+	func (@"time".lÂ·2 *@"time".Location "esc:0x1") @"time".lookupFirstZone () (? int)
+	func (@"time".lÂ·4 *@"time".Location "esc:0x1") @"time".lookupName (@"time".nameÂ·5 string "esc:0x1", @"time".unixÂ·6 int64) (@"time".offsetÂ·1 int, @"time".isDSTÂ·2 bool, @"time".okÂ·3 bool)
+	type @"time".Month int
+	func (@"time".mÂ·2 @"time".Month) String () (? string) { return @"time".months[@"time".mÂ·2 - @"time".Month(0x1)] }
+	type @"time".Weekday int
+	func (@"time".dÂ·2 @"time".Weekday) String () (? string) { return @"time".days[@"time".dÂ·2] }
+	type @"time".Time struct { @"time".sec int64; @"time".nsec int32; @"time".loc *@"time".Location }
+	func (@"time".tÂ·2 @"time".Time "esc:0x12") Add (@"time".dÂ·3 @"time".Duration) (? @"time".Time) { @"time".tÂ·2.@"time".sec += int64(@"time".dÂ·3 / @"time".Duration(0x3b9aca00)); var @"time".nsecÂ·4 int32; ; @"time".nsecÂ·4 = int32(@"time".tÂ·2.@"time".nsec) + int32(@"time".dÂ·3 % @"time".Duration(0x3b9aca00)); if @"time".nsecÂ·4 >= int32(0x3b9aca00) { @"time".tÂ·2.@"time".sec++; @"time".nsecÂ·4 -= int32(0x3b9aca00) } else { if @"time".nsecÂ·4 < int32(0x0) { @"time".tÂ·2.@"time".sec--; @"time".nsecÂ·4 += int32(0x3b9aca00) } }; @"time".tÂ·2.@"time".nsec = @"time".nsecÂ·4; return @"time".tÂ·2 }
+	func (@"time".tÂ·2 @"time".Time "esc:0x12") AddDate (@"time".yearsÂ·3 int, @"time".monthsÂ·4 int, @"time".daysÂ·5 int) (? @"time".Time)
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") After (@"time".uÂ·3 @"time".Time "esc:0x1") (? bool) { return @"time".tÂ·2.@"time".sec > @"time".uÂ·3.@"time".sec || @"time".tÂ·2.@"time".sec == @"time".uÂ·3.@"time".sec && @"time".tÂ·2.@"time".nsec > @"time".uÂ·3.@"time".nsec }
+	func (@"time".tÂ·2 @"time".Time "esc:0x9") AppendFormat (@"time".bÂ·3 []byte "esc:0x1a", @"time".layoutÂ·4 string "esc:0x9") (? []byte)
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") Before (@"time".uÂ·3 @"time".Time "esc:0x1") (? bool) { return @"time".tÂ·2.@"time".sec < @"time".uÂ·3.@"time".sec || @"time".tÂ·2.@"time".sec == @"time".uÂ·3.@"time".sec && @"time".tÂ·2.@"time".nsec < @"time".uÂ·3.@"time".nsec }
+	func (@"time".tÂ·4 @"time".Time "esc:0x1") Clock () (@"time".hourÂ·1 int, @"time".minÂ·2 int, @"time".secÂ·3 int)
+	func (@"time".tÂ·4 @"time".Time "esc:0x1") Date () (@"time".yearÂ·1 int, @"time".monthÂ·2 @"time".Month, @"time".dayÂ·3 int)
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") Day () (? int)
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") Equal (@"time".uÂ·3 @"time".Time "esc:0x1") (? bool) { return @"time".tÂ·2.@"time".sec == @"time".uÂ·3.@"time".sec && @"time".tÂ·2.@"time".nsec == @"time".uÂ·3.@"time".nsec }
+	func (@"time".tÂ·2 @"time".Time "esc:0x9") Format (@"time".layoutÂ·3 string "esc:0x9") (? string)
+	func (@"time".tÂ·2 *@"time".Time "esc:0x1") GobDecode (@"time".dataÂ·3 []byte "esc:0x1") (? error)
+	func (@"time".tÂ·3 @"time".Time "esc:0x1") GobEncode () (? []byte, ? error)
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") Hour () (? int)
+	func (@"time".tÂ·3 @"time".Time "esc:0x1") ISOWeek () (@"time".yearÂ·1 int, @"time".weekÂ·2 int)
+	func (@"time".tÂ·2 @"time".Time "esc:0x12") In (@"time".locÂ·3 *@"time".Location "esc:0x12") (? @"time".Time)
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") IsZero () (? bool) { return @"time".tÂ·2.@"time".sec == int64(0x0) && @"time".tÂ·2.@"time".nsec == int32(0x0) }
+	func (@"time".tÂ·2 @"time".Time "esc:0x12") Local () (? @"time".Time) { @"time".tÂ·2.@"time".loc = @"time".Local; return @"time".tÂ·2 }
+	func (@"time".tÂ·2 @"time".Time "esc:0x12") Location () (? *@"time".Location) { var @"time".lÂ·3 *@"time".Location; ; @"time".lÂ·3 = @"time".tÂ·2.@"time".loc; if @"time".lÂ·3 == nil { @"time".lÂ·3 = @"time".UTC }; return @"time".lÂ·3 }
+	func (@"time".tÂ·3 @"time".Time "esc:0x1") MarshalBinary () (? []byte, ? error)
+	func (@"time".tÂ·3 @"time".Time "esc:0x9") MarshalJSON () (? []byte, ? error)
+	func (@"time".tÂ·3 @"time".Time "esc:0x9") MarshalText () (? []byte, ? error)
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") Minute () (? int)
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") Month () (? @"time".Month)
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") Nanosecond () (? int) { return int(@"time".tÂ·2.@"time".nsec) }
+	func (@"time".tÂ·2 @"time".Time "esc:0x12") Round (@"time".dÂ·3 @"time".Duration) (? @"time".Time)
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") Second () (? int)
+	func (@"time".tÂ·2 @"time".Time "esc:0x9") String () (? string)
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") Sub (@"time".uÂ·3 @"time".Time "esc:0x1") (? @"time".Duration)
+	func (@"time".tÂ·2 @"time".Time "esc:0x12") Truncate (@"time".dÂ·3 @"time".Duration) (? @"time".Time)
+	func (@"time".tÂ·2 @"time".Time "esc:0x12") UTC () (? @"time".Time) { @"time".tÂ·2.@"time".loc = @"time".UTC; return @"time".tÂ·2 }
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") Unix () (? int64) { return @"time".tÂ·2.@"time".sec + int64(-0xe7791f700) }
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") UnixNano () (? int64) { return (@"time".tÂ·2.@"time".sec + int64(-0xe7791f700)) * int64(0x3b9aca00) + int64(@"time".tÂ·2.@"time".nsec) }
+	func (@"time".tÂ·2 *@"time".Time "esc:0x1") UnmarshalBinary (@"time".dataÂ·3 []byte "esc:0x1") (? error)
+	func (@"time".tÂ·2 *@"time".Time "esc:0x1") UnmarshalJSON (@"time".dataÂ·3 []byte "esc:0x1") (@"time".errÂ·1 error)
+	func (@"time".tÂ·2 *@"time".Time "esc:0x1") UnmarshalText (@"time".dataÂ·3 []byte "esc:0x1") (@"time".errÂ·1 error)
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") Weekday () (? @"time".Weekday)
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") Year () (? int)
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") YearDay () (? int)
+	func (@"time".tÂ·3 @"time".Time "esc:0x32") Zone () (@"time".nameÂ·1 string, @"time".offsetÂ·2 int)
+	func (@"time".tÂ·2 @"time".Time "esc:0x1") @"time".abs () (? uint64)
+	func (@"time".tÂ·5 @"time".Time "esc:0x1") @"time".date (@"time".fullÂ·6 bool) (@"time".yearÂ·1 int, @"time".monthÂ·2 @"time".Month, @"time".dayÂ·3 int, @"time".ydayÂ·4 int)
+	func (@"time".tÂ·4 @"time".Time "esc:0x32") @"time".locabs () (@"time".nameÂ·1 string, @"time".offsetÂ·2 int, @"time".absÂ·3 uint64)
+	type @"os".FileInfo interface { IsDir() (? bool); ModTime() (? @"time".Time); Mode() (? @"os".FileMode); Name() (? string); Size() (? int64); Sys() (? interface {}) }
+	type @"os".File struct { @"os".? *@"os".file }
+	func (@"os".fÂ·2 *@"os".File "esc:0x22") Chdir () (? error) { if @"os".fÂ·2 == nil { return @"os".ErrInvalid }; var @"os".eÂ·3 error; ; @"os".eÂ·3 = @"syscall".Fchdir(@"os".fÂ·2.@"os".file.@"os".fd); if @"os".eÂ·3 != nil { return (&@"os".PathError{ Op:string("chdir"), Path:@"os".fÂ·2.@"os".file.@"os".name, Err:@"os".eÂ·3 }) }; return nil }
+	func (@"os".fÂ·2 *@"os".File "esc:0x22") Chmod (@"os".modeÂ·3 @"os".FileMode) (? error)
+	func (@"os".fÂ·2 *@"os".File "esc:0x22") Chown (@"os".uidÂ·3 int, @"os".gidÂ·4 int) (? error) { if @"os".fÂ·2 == nil { return @"os".ErrInvalid }; var @"os".eÂ·5 error; ; @"os".eÂ·5 = @"syscall".Fchown(@"os".fÂ·2.@"os".file.@"os".fd, @"os".uidÂ·3, @"os".gidÂ·4); if @"os".eÂ·5 != nil { return (&@"os".PathError{ Op:string("chown"), Path:@"os".fÂ·2.@"os".file.@"os".name, Err:@"os".eÂ·5 }) }; return nil }
+	func (@"os".fileÂ·2 *@"os".File "esc:0x9") Close () (? error)
+	func (@"os".fileÂ·2 *@"os".File "esc:0x1") Fd () (? uintptr) { if @"os".fileÂ·2 == nil { return uintptr(0xffffffffffffffff) }; return uintptr(@"os".fileÂ·2.@"os".file.@"os".fd) }
+	func (@"os".fÂ·2 *@"os".File "esc:0x32") Name () (? string) { return @"os".fÂ·2.@"os".file.@"os".name }
+	func (@"os".fÂ·3 *@"os".File "esc:0x10a") Read (@"os".bÂ·4 []byte "esc:0x1") (@"os".nÂ·1 int, @"os".errÂ·2 error)
+	func (@"os".fÂ·3 *@"os".File "esc:0x10a") ReadAt (@"os".bÂ·4 []byte "esc:0x1", @"os".offÂ·5 int64) (@"os".nÂ·1 int, @"os".errÂ·2 error)
+	func (@"os".fÂ·3 *@"os".File "esc:0x102") Readdir (@"os".nÂ·4 int) (@"os".fiÂ·1 []@"os".FileInfo, @"os".errÂ·2 error)
+	func (@"os".fÂ·3 *@"os".File "esc:0x102") Readdirnames (@"os".nÂ·4 int) (@"os".namesÂ·1 []string, @"os".errÂ·2 error)
+	func (@"os".fÂ·3 *@"os".File "esc:0x10a") Seek (@"os".offsetÂ·4 int64, @"os".whenceÂ·5 int) (@"os".retÂ·1 int64, @"os".errÂ·2 error)
+	func (@"os".fileÂ·3 *@"os".File "esc:0x12a") Stat () (? @"os".FileInfo, ? error)
+	func (@"os".fÂ·2 *@"os".File "esc:0x1") Sync () (? error)
+	func (@"os".fÂ·2 *@"os".File "esc:0x22") Truncate (@"os".sizeÂ·3 int64) (? error)
+	func (@"os".fÂ·3 *@"os".File "esc:0x10a") Write (@"os".bÂ·4 []byte "esc:0x9") (@"os".nÂ·1 int, @"os".errÂ·2 error)
+	func (@"os".fÂ·3 *@"os".File "esc:0x10a") WriteAt (@"os".bÂ·4 []byte "esc:0x1", @"os".offÂ·5 int64) (@"os".nÂ·1 int, @"os".errÂ·2 error)
+	func (@"os".fÂ·3 *@"os".File "esc:0x10a") WriteString (@"os".sÂ·4 string "esc:0x1") (@"os".nÂ·1 int, @"os".errÂ·2 error)
+	func (@"os".fÂ·3 *@"os".File "esc:0x9") @"os".pread (@"os".bÂ·4 []byte "esc:0x1", @"os".offÂ·5 int64) (@"os".nÂ·1 int, @"os".errÂ·2 error)
+	func (@"os".fÂ·3 *@"os".File "esc:0x9") @"os".pwrite (@"os".bÂ·4 []byte "esc:0x1", @"os".offÂ·5 int64) (@"os".nÂ·1 int, @"os".errÂ·2 error)
+	func (@"os".fÂ·3 *@"os".File "esc:0x9") @"os".read (@"os".bÂ·4 []byte "esc:0x1") (@"os".nÂ·1 int, @"os".errÂ·2 error)
+	func (@"os".fÂ·3 *@"os".File "esc:0x9") @"os".readConsole (@"os".bÂ·4 []byte "esc:0x1") (@"os".nÂ·1 int, @"os".errÂ·2 error)
+	func (@"os".fileÂ·3 *@"os".File "esc:0x102") @"os".readdir (@"os".nÂ·4 int) (@"os".fiÂ·1 []@"os".FileInfo, @"os".errÂ·2 error)
+	func (@"os".fileÂ·3 *@"os".File "esc:0x102") @"os".readdirnames (@"os".nÂ·4 int) (@"os".namesÂ·1 []string, @"os".errÂ·2 error)
+	func (@"os".fÂ·3 *@"os".File "esc:0x9") @"os".seek (@"os".offsetÂ·4 int64, @"os".whenceÂ·5 int) (@"os".retÂ·1 int64, @"os".errÂ·2 error)
+	func (@"os".fÂ·3 *@"os".File "esc:0x9") @"os".write (@"os".bÂ·4 []byte "esc:0x9") (@"os".nÂ·1 int, @"os".errÂ·2 error)
+	func (@"os".fÂ·3 *@"os".File "esc:0x9") @"os".writeConsole (@"os".bÂ·4 []byte "esc:0x9") (@"os".nÂ·1 int, @"os".errÂ·2 error)
+	var @"os".Stderr *@"os".File
+	import colors "github.com/beego/bee/logger/colors" // indirect
+	func @"github.com/beego/bee/logger/colors".NewColorWriter (@"github.com/beego/bee/logger/colors".wÂ·2 @"io".Writer) (? @"io".Writer) { return @"github.com/beego/bee/logger/colors".NewModeColorWriter(@"github.com/beego/bee/logger/colors".wÂ·2, @"github.com/beego/bee/logger/colors".outputMode(0x1)) }
+	var @"time".months [12]string
+	var @"time".days [7]string
+	var @"time".Local *@"time".Location
+	var @"time".UTC *@"time".Location
+	var @"os".ErrInvalid error
+	func @"syscall".Fchdir (@"syscall".fdÂ·2 @"syscall".Handle) (@"syscall".errÂ·1 error) { return @"syscall".Errno(@"syscall".Errno(0x20000082)) }
+	type @"os".PathError struct { Op string; Path string; Err error }
+	func (@"os".eÂ·2 *@"os".PathError "esc:0x9") Error () (? string)
+	func @"syscall".Fchown (@"syscall".fdÂ·2 @"syscall".Handle, @"syscall".uidÂ·3 int, @"syscall".gidÂ·4 int) (@"syscall".errÂ·1 error) { return @"syscall".Errno(@"syscall".Errno(0x20000082)) }
+	type @"github.com/beego/bee/logger/colors".outputMode int
+	func @"github.com/beego/bee/logger/colors".NewModeColorWriter (@"github.com/beego/bee/logger/colors".wÂ·2 @"io".Writer, @"github.com/beego/bee/logger/colors".modeÂ·3 @"github.com/beego/bee/logger/colors".outputMode) (? @"io".Writer) { var @"github.com/beego/bee/logger/colors".okÂ·4 bool; ; _, @"github.com/beego/bee/logger/colors".okÂ·4 = @"github.com/beego/bee/logger/colors".wÂ·2.(*@"github.com/beego/bee/logger/colors".colorWriter); if !@"github.com/beego/bee/logger/colors".okÂ·4 { return (&@"github.com/beego/bee/logger/colors".colorWriter{ @"github.com/beego/bee/logger/colors".w:@"github.com/beego/bee/logger/colors".wÂ·2, @"github.com/beego/bee/logger/colors".mode:@"github.com/beego/bee/logger/colors".modeÂ·3 }) }; return @"github.com/beego/bee/logger/colors".wÂ·2 }
+	type @"syscall".Errno uintptr
+	func (@"syscall".eÂ·2 @"syscall".Errno) Error () (? string)
+	func (@"syscall".eÂ·2 @"syscall".Errno) Temporary () (? bool) { return @"syscall".eÂ·2 == @"syscall".Errno(0x20000026) || @"syscall".eÂ·2 == @"syscall".Errno(0x2000003b) || @"syscall".eÂ·2.Timeout() }
+	func (@"syscall".eÂ·2 @"syscall".Errno) Timeout () (? bool) { return @"syscall".eÂ·2 == @"syscall".Errno(0x20000006) || @"syscall".eÂ·2 == @"syscall".Errno(0x2000007f) || @"syscall".eÂ·2 == @"syscall".Errno(0x20000079) }
+	type @"github.com/beego/bee/logger/colors".csiState int
+	import bytes "bytes" // indirect
+	type @"bytes".readOp int
+	type @"io".Reader interface { Read(@"io".p []byte) (@"io".n int, @"io".err error) }
+	type @"bytes".Buffer struct { @"bytes".buf []byte; @"bytes".off int; @"bytes".runeBytes [4]byte; @"bytes".bootstrap [64]byte; @"bytes".lastRead @"bytes".readOp }
+	func (@"bytes".bÂ·2 *@"bytes".Buffer "esc:0x22") Bytes () (? []byte) { return @"bytes".bÂ·2.@"bytes".buf[@"bytes".bÂ·2.@"bytes".off:] }
+	func (@"bytes".bÂ·2 *@"bytes".Buffer "esc:0x1") Cap () (? int) { return cap(@"bytes".bÂ·2.@"bytes".buf) }
+	func (@"bytes".bÂ·1 *@"bytes".Buffer) Grow (@"bytes".nÂ·2 int)
+	func (@"bytes".bÂ·2 *@"bytes".Buffer "esc:0x1") Len () (? int) { return len(@"bytes".bÂ·2.@"bytes".buf) - @"bytes".bÂ·2.@"bytes".off }
+	func (@"bytes".bÂ·2 *@"bytes".Buffer "esc:0x22") Next (@"bytes".nÂ·3 int) (? []byte) { @"bytes".bÂ·2.@"bytes".lastRead = @"bytes".readOp(0x0); var @"bytes".mÂ·4 int; ; @"bytes".mÂ·4 = @"bytes".bÂ·2.Len(); if @"bytes".nÂ·3 > @"bytes".mÂ·4 { @"bytes".nÂ·3 = @"bytes".mÂ·4 }; var @"bytes".dataÂ·5 []byte; ; @"bytes".dataÂ·5 = @"bytes".bÂ·2.@"bytes".buf[@"bytes".bÂ·2.@"bytes".off:@"bytes".bÂ·2.@"bytes".off + @"bytes".nÂ·3]; @"bytes".bÂ·2.@"bytes".off += @"bytes".nÂ·3; if @"bytes".nÂ·3 > int(0x0) { @"bytes".bÂ·2.@"bytes".lastRead = @"bytes".readOp(0x2) }; return @"bytes".dataÂ·5 }
+	func (@"bytes".bÂ·3 *@"bytes".Buffer "esc:0x9") Read (@"bytes".pÂ·4 []byte "esc:0x1") (@"bytes".nÂ·1 int, @"bytes".errÂ·2 error)
+	func (@"bytes".bÂ·3 *@"bytes".Buffer "esc:0x1") ReadByte () (@"bytes".cÂ·1 byte, @"bytes".errÂ·2 error)
+	func (@"bytes".bÂ·3 *@"bytes".Buffer "esc:0x9") ReadBytes (@"bytes".delimÂ·4 byte) (@"bytes".lineÂ·1 []byte, @"bytes".errÂ·2 error)
+	func (@"bytes".bÂ·3 *@"bytes".Buffer "esc:0x9") ReadFrom (@"bytes".rÂ·4 @"io".Reader) (@"bytes".nÂ·1 int64, @"bytes".errÂ·2 error)
+	func (@"bytes".bÂ·4 *@"bytes".Buffer "esc:0x1") ReadRune () (@"bytes".rÂ·1 rune, @"bytes".sizeÂ·2 int, @"bytes".errÂ·3 error)
+	func (@"bytes".bÂ·3 *@"bytes".Buffer "esc:0x1") ReadString (@"bytes".delimÂ·4 byte) (@"bytes".lineÂ·1 string, @"bytes".errÂ·2 error)
+	func (@"bytes".bÂ·1 *@"bytes".Buffer "esc:0x1") Reset ()
+	func (@"bytes".bÂ·2 *@"bytes".Buffer "esc:0x1") String () (? string) { if @"bytes".bÂ·2 == nil { return string("<nil>") }; return string(@"bytes".bÂ·2.@"bytes".buf[@"bytes".bÂ·2.@"bytes".off:]) }
+	func (@"bytes".bÂ·1 *@"bytes".Buffer "esc:0x1") Truncate (@"bytes".nÂ·2 int)
+	func (@"bytes".bÂ·2 *@"bytes".Buffer "esc:0x1") UnreadByte () (? error) { if @"bytes".bÂ·2.@"bytes".lastRead != @"bytes".readOp(0x1) && @"bytes".bÂ·2.@"bytes".lastRead != @"bytes".readOp(0x2) { return @"errors".New(string("bytes.Buffer: UnreadByte: previous operation was not a read")) }; @"bytes".bÂ·2.@"bytes".lastRead = @"bytes".readOp(0x0); if @"bytes".bÂ·2.@"bytes".off > int(0x0) { @"bytes".bÂ·2.@"bytes".off-- }; return nil }
+	func (@"bytes".bÂ·2 *@"bytes".Buffer "esc:0x1") UnreadRune () (? error)
+	func (@"bytes".bÂ·3 *@"bytes".Buffer) Write (@"bytes".pÂ·4 []byte "esc:0x9") (@"bytes".nÂ·1 int, @"bytes".errÂ·2 error)
+	func (@"bytes".bÂ·2 *@"bytes".Buffer) WriteByte (@"bytes".cÂ·3 byte) (? error)
+	func (@"bytes".bÂ·3 *@"bytes".Buffer) WriteRune (@"bytes".rÂ·4 rune) (@"bytes".nÂ·1 int, @"bytes".errÂ·2 error)
+	func (@"bytes".bÂ·3 *@"bytes".Buffer) WriteString (@"bytes".sÂ·4 string "esc:0x9") (@"bytes".nÂ·1 int, @"bytes".errÂ·2 error)
+	func (@"bytes".bÂ·3 *@"bytes".Buffer "esc:0x9") WriteTo (@"bytes".wÂ·4 @"io".Writer) (@"bytes".nÂ·1 int64, @"bytes".errÂ·2 error)
+	func (@"bytes".bÂ·2 *@"bytes".Buffer) @"bytes".grow (@"bytes".nÂ·3 int) (? int)
+	func (@"bytes".bÂ·3 *@"bytes".Buffer "esc:0x22") @"bytes".readSlice (@"bytes".delimÂ·4 byte) (@"bytes".lineÂ·1 []byte, @"bytes".errÂ·2 error)
+	type @"github.com/beego/bee/logger/colors".colorWriter struct { @"github.com/beego/bee/logger/colors".w @"io".Writer; @"github.com/beego/bee/logger/colors".mode @"github.com/beego/bee/logger/colors".outputMode; @"github.com/beego/bee/logger/colors".state @"github.com/beego/bee/logger/colors".csiState; @"github.com/beego/bee/logger/colors".paramStartBuf @"bytes".Buffer; @"github.com/beego/bee/logger/colors".paramBuf @"bytes".Buffer }
+	func (@"github.com/beego/bee/logger/colors".cwÂ·3 *@"github.com/beego/bee/logger/colors".colorWriter) Write (@"github.com/beego/bee/logger/colors".pÂ·4 []byte) (? int, ? error)
+	func (@"github.com/beego/bee/logger/colors".cwÂ·3 *@"github.com/beego/bee/logger/colors".colorWriter "esc:0x9") @"github.com/beego/bee/logger/colors".flushBuffer () (? int, ? error)
+	func (@"github.com/beego/bee/logger/colors".cwÂ·3 *@"github.com/beego/bee/logger/colors".colorWriter "esc:0x9") @"github.com/beego/bee/logger/colors".flushTo (@"github.com/beego/bee/logger/colors".wÂ·4 @"io".Writer "esc:0x1") (? int, ? error)
+	func (@"github.com/beego/bee/logger/colors".cwÂ·3 *@"github.com/beego/bee/logger/colors".colorWriter "esc:0x9") @"github.com/beego/bee/logger/colors".resetBuffer () (? int, ? error)
+	import errors "errors" // indirect
+	func @"errors".New (@"errors".textÂ·2 string) (? error) { return (&@"errors".errorString{ @"errors".s:@"errors".textÂ·2 }) }
+	type @"errors".errorString struct { @"errors".s string }
+	func (@"errors".eÂ·2 *@"errors".errorString "esc:0x22") Error () (? string) { return @"errors".eÂ·2.@"errors".s }
+
+$$
+ _go_.o          0           0     0     644     108060    `
+go object windows amd64 go1.6.1 X:none
+
+!
+  go13ld
+fmt.aos.apath/filepath.astrings.aFgithub.com/beego/bee/cmd/commands.aVgithub.com/beego/bee/cmd/commands/version.a>github.com/beego/bee/generate.a:github.com/beego/bee/logger.a8github.com/beego/bee/utils.a ş"".init.1      eH‹%(   H‹‰    H;a†  HƒìhH    H‰\$PH‹    1íH9è„Ê  H‹    H‰$Hƒ<$ „¨  Hƒ$@H‹L$PH‰D$XH‰D$H‰L$`H‰L$H    H‰\$HÇD$    H    H‰\$(HÇD$0)   è    H    H‰\$PH‹    1íH9è„  H‹    H‰$Hƒ<$ „é  Hƒ$@H‹L$PH‰D$XH‰D$H‰L$`H‰L$H    H‰\$HÇD$    H    H‰\$(HÇD$02   è    H    H‰\$PH‹    1íH9è„L  H‹    H‰$Hƒ<$ „*  Hƒ$@H‹L$PH‰D$XH‰D$H‰L$`H‰L$H    H‰\$HÇD$    H    H‰\$(HÇD$0G   è    H‹    H‹    H‹    H‰ÃHÿÃH9Ëw3H‰    HÂH‹-    €=     uH‰+HƒÄhÃH‰$H‰l$è    ëëH-    H‰,$H‰T$H‰D$H‰L$H‰\$ è    H‹T$(H‹D$0H‹L$8H‰ÃH‰D$@HÿÃH‰    H‰    H‰T$H€=     uH‰    énÿÿÿH-    H‰,$H‰T$è    H‹T$HH‹D$@éJÿÿÿ‰%    éÊşÿÿH    H‰$H    H‰\$H    H‰\$è    H‹D$é‚şÿÿ‰%    éşÿÿH    H‰$H    H‰\$H    H‰\$è    H‹D$éÃıÿÿ‰%    éLıÿÿH    H‰$H    H‰\$H    H‰\$è    H‹D$éıÿÿè    é¾üÿÿÌÌÌÌÌÌÌÌÌÌÌÌÌÌ^      B  Hgithub.com/beego/bee/generate.Tables   Z  ngo.itab.*github.com/beego/bee/utils.DocValue.flag.Value   ~  "".CmdApiapp   æ  $go.string."tables"     jgo.string."List of table names separated by a comma."   ¶  &flag.(*FlagSet).Var   Ä  Ngithub.com/beego/bee/generate.SQLDriver   Ü  ngo.itab.*github.com/beego/bee/utils.DocValue.flag.Value   €  "".CmdApiapp   è  $go.string."driver"   ’  |go.string."Database driver. Either mysql, postgres or sqlite."   ¸  &flag.(*FlagSet).Var   Æ  Jgithub.com/beego/bee/generate.SQLConn   Ş  ngo.itab.*github.com/beego/bee/utils.DocValue.flag.Value   ‚  "".CmdApiapp   ê   go.string."conn"   ”  ¦go.string."Connection string used by the driver to connect to a database instance."   º  &flag.(*FlagSet).Var   È  fgithub.com/beego/bee/cmd/commands.AvailableCommands   Ö fgithub.com/beego/bee/cmd/commands.AvailableCommands   ä  fgithub.com/beego/bee/cmd/commands.AvailableCommands   ˆ fgithub.com/beego/bee/cmd/commands.AvailableCommands     "".CmdApiapp   ª (runtime.writeBarrier   Ü  .runtime.writebarrierptr   î  btype.[]*github.com/beego/bee/cmd/commands.Command   ¨  "runtime.growslice   ê fgithub.com/beego/bee/cmd/commands.AvailableCommands   ø  fgithub.com/beego/bee/cmd/commands.AvailableCommands   	 (runtime.writeBarrier   ¢	  fgithub.com/beego/bee/cmd/commands.AvailableCommands   º	  fgithub.com/beego/bee/cmd/commands.AvailableCommands   Ö	  .runtime.writebarrierptr   š
+  Rtype.*github.com/beego/bee/utils.DocValue   °
+  type.flag.Value   È
+  ngo.itab.*github.com/beego/bee/utils.DocValue.flag.Value   Ü
+   runtime.typ2Itab   –  Rtype.*github.com/beego/bee/utils.DocValue   ¬  type.flag.Value   Ä  ngo.itab.*github.com/beego/bee/utils.DocValue.flag.Value   Ø   runtime.typ2Itab   ’  Rtype.*github.com/beego/bee/utils.DocValue   ¨  type.flag.Value   À  ngo.itab.*github.com/beego/bee/utils.DocValue.flag.Value   Ô   runtime.typ2Itab   ò  0runtime.morestack_noctxt    Ğ  
+"".autotmp_0005  type.*uint8 "".autotmp_0004  type.*uint8 "".autotmp_0002  Rtype.*github.com/beego/bee/utils.DocValue "".autotmp_0001  Rtype.*github.com/beego/bee/utils.DocValue "".autotmp_0000 /Rtype.*github.com/beego/bee/utils.DocValue "ĞÅÏĞÔÏ Ğ @¸>Š>>>  šĞC£ TgclocalsÂ·7d2d5fca80364273fb07d5820a76fef4 TgclocalsÂ·7f1e9457ccdd59eb521cbcc8eefe7f0f   zE:/GOPATH/src/github.com/beego/bee/cmd/commands/api/apiapp.goş"".createAPI   ñ   ñeH‹%(   H‹‰    H„$PõÿÿH;A†\  Hì0  WÀH¼$`  è    H¼$à  è    H¼$   è    H¼$Ğ   è    H‹„$8  1ÛH‰\$`H‰\$hH‹˜¨   1íH9ë„ÙY  H‹¨¨   Hƒı „ÀY  H‹M H‹EH‰L$`H‰Œ$À   H‰D$hH‰„$È   H‹œ$H  Hƒû‡Y  H‹    H‰$H    H‰\$HÇD$   è    H‹œ$H  HƒûKY  H‹œ$H  H‹¬$P  Hƒû‚*Y  HÿËHÿÍL‹„$@  Hƒı tIƒÀH‰ÚH‹œ$8  H‰$Hƒ<$ „ìX  Hƒ$@L‰„$  L‰D$H‰”$  H‰T$H‰¬$  H‰l$è    H‹D$ H‹L$(H‰Œ$è   H‰„$à   Hƒø t>H‰$H‹X ÿÓH‹L$H‹D$H‹    H‰$H‰Œ$Ğ  H‰L$H‰„$Ø  H‰D$è    H‹´$@  Hƒ¼$H   †?X  H‹H‰$H‹NH‰L$è    H‹\$H‰œ$à  H‹\$H‰œ$è  H‹\$ H‰œ$°   H‹\$(H‰œ$¸   H‹L$0H‹T$8H‰”$ø   H‰Œ$ğ   Hƒù „Ô   1ÛH‰œ$@  H‰œ$H  Hœ$@  Hƒû „§W  HÇ„$ø     HÇ„$      H‰œ$ğ  H‰$H‰T$è    H‹L$H‹D$H‹œ$ğ  H‰Œ$0  H‰H‰„$8  €=     …0W  H‰CH‹    H‰$H    H‰\$HÇD$   H‹œ$ğ  H‰\$H‹œ$ø  H‰\$ H‹œ$   H‰\$(è    H‹    Hƒû uH    H‰    HÇ       H‹    H‰$H    H‰\$HÇD$   è    H‹œ$à  H‰$H‹œ$è  H‰\$ÇD$í  è    H    H‰œ$À  HÇ„$È     H    H‰œ$°  HÇ„$¸     H    H‰œ$   HÇ„$¨     H‹œ$à  H‰œ$  H‹œ$è  H‰œ$˜  H    H‰œ$€  HÇ„$ˆ     H¼$à
+  WÀHƒÇĞè    Hœ$à
+  Hƒû „¶U  HÇ„$ø     HÇ„$      H‰œ$ğ  H    H‰$Hœ$À  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  H‰Œ$0  H‰H‰„$8  €=     …'U  H‰CH    H‰$Hœ$°  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃH‰Œ$0  H‰H‰„$8  €=     …°T  H‰CH    H‰$Hœ$   H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ H‰Œ$0  H‰H‰„$8  €=     …9T  H‰CH    H‰$Hœ$  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ0H‰Œ$0  H‰H‰„$8  €=     …ÂS  H‰CH    H‰$Hœ$€  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ@H‰Œ$0  H‰H‰„$8  €=     …KS  H‰CH‹œ$À   H‰$H‹œ$È   H‰\$H    H‰\$HÇD$   H‹œ$ğ  H‰\$ H‹œ$ø  H‰\$(H‹œ$   H‰\$0è    Hœ$À  H‰ØH‹-    H‰+H‹-    H‰kH‹-    H‰kH‹-    H‰kHÇ„$     HÇ„$     H‰œ$  H‹¬$è  H‰kH‹¬$à  €=     …[R  H‰+H‰$H‹œ$  H‰\$H‹œ$  H‰\$è    H‹L$H‹D$ H‰Œ$Ğ  H‰$H‰„$Ø  H‰D$ÇD$í  è    H    H‰œ$À  HÇ„$È     H    H‰œ$°  HÇ„$¸     H    H‰„$   HÇ„$¨     H„$   H‹-    H‰(H‹-    H‰hH‹-    H‰hH‹-    H‰hHÇ„$     HÇ„$     H‰„$  H‹¬$è  H‰hH‹¬$à  €=     …%Q  H‰(H‰$H‹œ$  H‰\$H‹œ$  H‰\$è    H‹\$H‰œ$  H‹\$ H‰œ$˜  H    H‰œ$€  HÇ„$ˆ     H¼$
+  WÀHƒÇĞè    Hœ$
+  Hƒû „P  HÇ„$ø     HÇ„$      H‰œ$ğ  H    H‰$Hœ$À  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  H‰Œ$0  H‰H‰„$8  €=     …P  H‰CH    H‰$Hœ$°  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃH‰Œ$0  H‰H‰„$8  €=     …—O  H‰CH    H‰$Hœ$   H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ H‰Œ$0  H‰H‰„$8  €=     … O  H‰CH    H‰$Hœ$  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ0H‰Œ$0  H‰H‰„$8  €=     …©N  H‰CH    H‰$Hœ$€  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ@H‰Œ$0  H‰H‰„$8  €=     …2N  H‰CH‹œ$À   H‰$H‹œ$È   H‰\$H    H‰\$HÇD$   H‹œ$ğ  H‰\$ H‹œ$ø  H‰\$(H‹œ$   H‰\$0è    Hœ$€  H‰ØH‹-    H‰+H‹-    H‰kH‹-    H‰kH‹-    H‰kHÇ„$     HÇ„$     H‰œ$  H‹¬$è  H‰kH‹¬$à  €=     …BM  H‰+H‰$H‹œ$  H‰\$H‹œ$  H‰\$è    H‹L$H‹D$ H‰Œ$Ğ  H‰$H‰„$Ø  H‰D$ÇD$í  è    H    H‰œ$°  HÇ„$¸     H    H‰œ$   HÇ„$¨     H    H‰„$  HÇ„$˜     H„$`  H‹-    H‰(H‹-    H‰hH‹-    H‰hH‹-    H‰hHÇ„$     HÇ„$     H‰„$  H‹¬$è  H‰hH‹¬$à  €=     …L  H‰(H‰$H‹œ$  H‰\$H‹œ$  H‰\$è    H‹\$H‰œ$€  H‹\$ H‰œ$ˆ  H    H‰œ$À  HÇ„$È     H¼$@
+  WÀHƒÇĞè    Hœ$@
+  Hƒû „„K  HÇ„$ø     HÇ„$      H‰œ$ğ  H    H‰$Hœ$°  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  H‰Œ$0  H‰H‰„$8  €=     …õJ  H‰CH    H‰$Hœ$   H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃH‰Œ$0  H‰H‰„$8  €=     …~J  H‰CH    H‰$Hœ$  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ H‰Œ$0  H‰H‰„$8  €=     …J  H‰CH    H‰$Hœ$€  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ0H‰Œ$0  H‰H‰„$8  €=     …I  H‰CH    H‰$Hœ$À  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ@H‰Œ$0  H‰H‰„$8  €=     …I  H‰CH‹œ$À   H‰$H‹œ$È   H‰\$H    H‰\$HÇD$   H‹œ$ğ  H‰\$ H‹œ$ø  H‰\$(H‹œ$   H‰\$0è    Hœ$@  H‰ØH‹-    H‰+H‹-    H‰kH‹-    H‰kH‹-    H‰kHÇ„$     HÇ„$     H‰œ$  H‹¬$è  H‰kH‹¬$à  €=     …)H  H‰+H‰$H‹œ$  H‰\$H‹œ$  H‰\$è    H‹L$H‹D$ H‰Œ$Ğ  H‰$H‰„$Ø  H‰D$ÇD$í  è    H    H‰œ$   HÇ„$¨     H    H‰œ$  HÇ„$˜     H    H‰„$€  HÇ„$ˆ     H„$   H‹-    H‰(H‹-    H‰hH‹-    H‰hH‹-    H‰hHÇ„$     HÇ„$     H‰„$  H‹¬$è  H‰hH‹¬$à  €=     …óF  H‰(H‰$H‹œ$  H‰\$H‹œ$  H‰\$è    H‹\$H‰œ$À  H‹\$ H‰œ$È  H    H‰œ$°  HÇ„$¸     H¼$ğ	  WÀHƒÇĞè    Hœ$ğ	  Hƒû „kF  HÇ„$ø     HÇ„$      H‰œ$ğ  H    H‰$Hœ$   H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  H‰Œ$0  H‰H‰„$8  €=     …ÜE  H‰CH    H‰$Hœ$  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃH‰Œ$0  H‰H‰„$8  €=     …eE  H‰CH    H‰$Hœ$€  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ H‰Œ$0  H‰H‰„$8  €=     …îD  H‰CH    H‰$Hœ$À  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ0H‰Œ$0  H‰H‰„$8  €=     …wD  H‰CH    H‰$Hœ$°  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ@H‰Œ$0  H‰H‰„$8  €=     … D  H‰CH‹œ$À   H‰$H‹œ$È   H‰\$H    H‰\$HÇD$   H‹œ$ğ  H‰\$ H‹œ$ø  H‰\$(H‹œ$   H‰\$0è    H    H‰œ$   HÇ„$¨     H    H‰œ$  HÇ„$˜     H    H‰„$€  HÇ„$ˆ     H„$P  H‹-    H‰(H‹-    H‰hH‹-    H‰hH‹-    H‰hH‹-    H‰h H‹-    H‰h(HÇ„$     HÇ„$     H‰„$  H‹¬$è  H‰hH‹¬$à  €=     …¬B  H‰(H‰$H‹œ$  H‰\$H‹œ$  H‰\$è    H‹\$H‰œ$À  H‹\$ H‰œ$È  H    H‰œ$°  HÇ„$¸     H¼$ 	  WÀHƒÇĞè    Hœ$ 	  Hƒû „$B  HÇ„$ø     HÇ„$      H‰œ$ğ  H    H‰$Hœ$   H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  H‰Œ$0  H‰H‰„$8  €=     …•A  H‰CH    H‰$Hœ$  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃH‰Œ$0  H‰H‰„$8  €=     …A  H‰CH    H‰$Hœ$€  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ H‰Œ$0  H‰H‰„$8  €=     …§@  H‰CH    H‰$Hœ$À  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ0H‰Œ$0  H‰H‰„$8  €=     …0@  H‰CH    H‰$Hœ$°  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ@H‰Œ$0  H‰H‰„$8  €=     …¹?  H‰CH‹œ$À   H‰$H‹œ$È   H‰\$H    H‰\$HÇD$   H‹œ$ğ  H‰\$ H‹œ$ø  H‰\$(H‹œ$   H‰\$0è    Hœ$   H‰ØH‹-    H‰+H‹-    H‰kH‹-    H‰kH‹-    H‰kH‹-    H‰k H‹-    H‰k(HÇ„$     HÇ„$     H‰œ$  H‹¬$è  H‰kH‹¬$à  €=     …³>  H‰+H‰$H‹œ$  H‰\$H‹œ$  H‰\$è    H‹\$H‰œ$Ğ  H‹\$ H‰œ$Ø  H‹´$@  Hƒ¼$H   †U>  H‹H‰$H‹NH‰L$è    H‹L$H‹D$H‹    H‰$H‹    H‰\$H    H‰\$HÇD$   H‰Œ$p  H‰L$ H‰„$x  H‰D$(HÇD$0ÿÿÿÿè    H‹L$8H‹D$@H‹œ$Ğ  H‰$H‹œ$Ø  H‰\$H‰Œ$`  H‰L$H‰„$h  H‰D$è    H‹”$à  H‹Œ$è  H‹    Hƒû „»  H    H‰œ$  HÇ„$˜     H    H‰œ$€  HÇ„$ˆ     H    H‰„$À  HÇ„$È     H„$   H‹-    H‰(H‹-    H‰hH‹-    H‰hH‹-    H‰hHÇ„$     HÇ„$     H‰„$  H‰H€=     …ë
+  H‰H‰$H‹œ$  H‰\$H‹œ$  H‰\$è    H‹\$H‰œ$°  H‹\$ H‰œ$¸  H    H‰œ$   HÇ„$¨     H¼$P	  WÀHƒÇĞè    Hœ$P	  Hƒû „c
+  HÇ„$ø     HÇ„$      H‰œ$ğ  H    H‰$Hœ$  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  H‰Œ$0  H‰H‰„$8  €=     …Ô	  H‰CH    H‰$Hœ$€  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃH‰Œ$0  H‰H‰„$8  €=     …]	  H‰CH    H‰$Hœ$À  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ H‰Œ$0  H‰H‰„$8  €=     …æ  H‰CH    H‰$Hœ$°  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ0H‰Œ$0  H‰H‰„$8  €=     …o  H‰CH    H‰$Hœ$   H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ@H‰Œ$0  H‰H‰„$8  €=     …ø  H‰CH‹œ$À   H‰$H‹œ$È   H‰\$H    H‰\$HÇD$   H‹œ$ğ  H‰\$ H‹œ$ø  H‰\$(H‹œ$   H‰\$0è    H‹    H‰$H‹    H‰\$H    H‰\$HÇD$   H‹œ$°   H‰\$ H‹œ$¸   H‰\$(HÇD$0ÿÿÿÿè    H‹L$8H‹D$@H‰Œ$Ğ   H‰$H‰„$Ø   H‰D$H    H‰\$HÇD$   H‹    H‰\$ H‹    H‰\$(HÇD$0ÿÿÿÿè    H‹\$8H‰œ$Ğ   H‹\$@H‰œ$Ø   H‹    Hƒû…ı  H‹-    H‰,$H‹-    H‰l$H-    H‰l$HÇD$   è    ¶\$ €û „¾  H‹œ$Ğ   H‰$H‹œ$Ø   H‰\$H    H‰\$HÇD$   H    H‰\$ HÇD$("   HÇD$0ÿÿÿÿè    H‹\$8H‰œ$Ğ   H‹\$@H‰œ$Ø   Hœ$à  H‰ØH‹-    H‰+H‹-    H‰kH‹-    H‰kH‹-    H‰kHÇ„$     HÇ„$     H‰œ$  H‹¬$è  H‰kH‹¬$à  €=     …Á  H‰+H‰$H‹œ$  H‰\$H‹œ$  H‰\$è    H‹\$H‰œ$`  H‹\$ H‰œ$h  H    H‰$è    H‹L$H‹D$H‹œ$Ğ   H‰$H‹œ$Ø   H‰\$H    H‰\$HÇD$	   H‰Œ$Ğ  H‰L$ H‰„$Ø  H‰D$(HÇD$0ÿÿÿÿè    H‹L$8H‹D$@H‹œ$`  H‰$H‹œ$h  H‰\$H‰Œ$p  H‰L$H‰„$x  H‰D$è    1ÛH‰œ$   H‰œ$(  Hœ$   Hƒû „¤  HÇ„$ø     HÇ„$      H‰œ$ğ  H    H‰$H    H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  H‰Œ$0  H‰H‰„$8  €=     …  H‰CH‹    H‰$H    H‰\$HÇD$   H‹œ$ğ  H‰\$H‹œ$ø  H‰\$ H‹œ$   H‰\$(è    1ÛH‰œ$  H‰œ$  Hœ$  Hƒû „›  HÇ„$ø     HÇ„$      H‰œ$ğ  H    H‰$H    H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  H‰Œ$0  H‰H‰„$8  €=     …  H‰CH‹    H‰$H    H‰\$HÇD$   H‹œ$ğ  H‰\$H‹œ$ø  H‰\$ H‹œ$   H‰\$(è    1ÛH‰œ$   H‰œ$  Hœ$   Hƒû „’  HÇ„$ø     HÇ„$      H‰œ$ğ  H    H‰$H    H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  H‰Œ$0  H‰H‰„$8  €=     …  H‰CH‹    H‰$H    H‰\$HÇD$   H‹œ$ğ  H‰\$H‹œ$ø  H‰\$ H‹œ$   H‰\$(è    H‹    H‰$H‹    H‰\$H‹    H‰\$H‹    H‰\$H    H‰\$ HÇD$(   H‹    H‰\$0H‹    H‰\$8H‹œ$à  H‰\$@H‹œ$è  H‰\$Hè    H‹    H‰$H    H‰\$HÇD$   è    HÇ„$X      HÄ0  ÃLCL‰$H‰D$è    ééşÿÿ‰égşÿÿLCL‰$H‰D$è    éàıÿÿ‰é^ıÿÿLCL‰$H‰D$è    é×üÿÿ‰éUüÿÿH‰$H‰l$è    H‹„$  é'ûÿÿH‹    Hƒû…œúÿÿH‹-    H‰,$H‹-    H‰l$H-    H‰l$HÇD$   è    ¶\$ €û „]úÿÿH‹œ$Ğ   H‰$H‹œ$Ø   H‰\$H    H‰\$HÇD$   H    H‰\$ HÇD$(   HÇD$0ÿÿÿÿè    H‹\$8H‰œ$Ğ   H‹\$@H‰œ$Ø   éíùÿÿLCL‰$H‰D$è    éõ÷ÿÿLCL‰$H‰D$è    é~÷ÿÿLCL‰$H‰D$è    é÷ÿÿLCL‰$H‰D$è    éöÿÿLCL‰$H‰D$è    éöÿÿ‰é–õÿÿH‰$H‰T$è    H‹„$  éıôÿÿHœ$À  H‰ØH‹-    H‰+H‹-    H‰kH‹-    H‰kH‹-    H‰kHÇ„$     HÇ„$     H‰œ$  H‰K€=     …B1  H‰H‰$H‹œ$  H‰\$H‹œ$  H‰\$è    H‹L$H‹D$ H‰Œ$p  H‰$H‰„$x  H‰D$ÇD$í  è    H    H‰œ$°  HÇ„$¸     H    H‰œ$   HÇ„$¨     H    H‰„$€  HÇ„$ˆ     H„$   H‹-    H‰(H‹-    H‰hH‹-    H‰hH‹-    H‰hHÇ„$     HÇ„$     H‰„$  H‹¬$è  H‰hH‹¬$à  €=     …0  H‰(H‰$H‹œ$  H‰\$H‹œ$  H‰\$è    H‹\$H‰œ$  H‹\$ H‰œ$˜  H    H‰œ$À  HÇ„$È     H¼$ 	  WÀHƒÇĞè    Hœ$ 	  Hƒû „„/  HÇ„$ø     HÇ„$      H‰œ$ğ  H    H‰$Hœ$°  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  H‰Œ$0  H‰H‰„$8  €=     …õ.  H‰CH    H‰$Hœ$   H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃH‰Œ$0  H‰H‰„$8  €=     …~.  H‰CH    H‰$Hœ$€  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ H‰Œ$0  H‰H‰„$8  €=     ….  H‰CH    H‰$Hœ$  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ0H‰Œ$0  H‰H‰„$8  €=     …-  H‰CH    H‰$Hœ$À  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ@H‰Œ$0  H‰H‰„$8  €=     …-  H‰CH‹œ$À   H‰$H‹œ$È   H‰\$H    H‰\$HÇD$   H‹œ$ğ  H‰\$ H‹œ$ø  H‰\$(H‹œ$   H‰\$0è    Hœ$€  H‰ØH‹-    H‰+H‹-    H‰kH‹-    H‰kH‹-    H‰kHÇ„$     HÇ„$     H‰œ$  H‹¬$è  H‰kH‹¬$à  €=     …),  H‰+H‰$H‹œ$  H‰\$H‹œ$  H‰\$è    H‹L$H‹D$ H‰Œ$p  H‰$H‰„$x  H‰D$ÇD$í  è    H    H‰œ$   HÇ„$¨     H    H‰œ$€  HÇ„$ˆ     H    H‰„$  HÇ„$˜     H„$`  H‹-    H‰(H‹-    H‰hH‹-    H‰hH‹-    H‰hHÇ„$     HÇ„$     H‰„$  H‹¬$è  H‰hH‹¬$à  €=     …ó*  H‰(H‰$H‹œ$  H‰\$H‹œ$  H‰\$è    H‹L$H‹D$ HÇ$    H‰Œ$`  H‰L$H‰„$h  H‰D$H    H‰\$HÇD$    è    H‹\$(H‰œ$À  H‹\$0H‰œ$È  H    H‰œ$°  HÇ„$¸     H¼$°  WÀHƒÇĞè    Hœ$°  Hƒû „%*  HÇ„$ø     HÇ„$      H‰œ$ğ  H    H‰$Hœ$   H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  H‰Œ$0  H‰H‰„$8  €=     …–)  H‰CH    H‰$Hœ$€  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃH‰Œ$0  H‰H‰„$8  €=     …)  H‰CH    H‰$Hœ$  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ H‰Œ$0  H‰H‰„$8  €=     …¨(  H‰CH    H‰$Hœ$À  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ0H‰Œ$0  H‰H‰„$8  €=     …1(  H‰CH    H‰$Hœ$°  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ@H‰Œ$0  H‰H‰„$8  €=     …º'  H‰CH‹œ$À   H‰$H‹œ$È   H‰\$H    H‰\$HÇD$   H‹œ$ğ  H‰\$ H‹œ$ø  H‰\$(H‹œ$   H‰\$0è    H    H‰œ$   HÇ„$¨     H    H‰œ$€  HÇ„$ˆ     H    H‰„$  HÇ„$˜     H„$ğ  H‹-    H‰(H‹-    H‰hH‹-    H‰hH‹-    H‰hH‹-    H‰h H‹-    H‰h(HÇ„$     HÇ„$     H‰„$  H‹¬$è  H‰hH‹¬$à  €=     …f&  H‰(H‰$H‹œ$  H‰\$H‹œ$  H‰\$è    H‹\$H‰œ$À  H‹\$ H‰œ$È  H    H‰œ$°  HÇ„$¸     H¼$`  WÀHƒÇĞè    Hœ$`  Hƒû „Ş%  HÇ„$ø     HÇ„$      H‰œ$ğ  H    H‰$Hœ$   H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  H‰Œ$0  H‰H‰„$8  €=     …O%  H‰CH    H‰$Hœ$€  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃH‰Œ$0  H‰H‰„$8  €=     …Ø$  H‰CH    H‰$Hœ$  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ H‰Œ$0  H‰H‰„$8  €=     …a$  H‰CH    H‰$Hœ$À  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ0H‰Œ$0  H‰H‰„$8  €=     …ê#  H‰CH    H‰$Hœ$°  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ@H‰Œ$0  H‰H‰„$8  €=     …s#  H‰CH‹œ$À   H‰$H‹œ$È   H‰\$H    H‰\$HÇD$   H‹œ$ğ  H‰\$ H‹œ$ø  H‰\$(H‹œ$   H‰\$0è    Hœ$À  H‰ØH‹-    H‰+H‹-    H‰kH‹-    H‰kH‹-    H‰kH‹-    H‰k H‹-    H‰k(HÇ„$     HÇ„$     H‰œ$  H‹¬$è  H‰kH‹¬$à  €=     …m"  H‰+H‰$H‹œ$  H‰\$H‹œ$  H‰\$è    H‹\$H‰œ$`  H‹\$ H‰œ$h  H‹    H‰$H‹    H‰\$H    H‰\$HÇD$   H‹œ$°   H‰\$ H‹œ$¸   H‰\$(HÇD$0ÿÿÿÿè    H‹L$8H‹D$@H‹œ$`  H‰$H‹œ$h  H‰\$H‰Œ$p  H‰L$H‰„$x  H‰D$è    H    H‰œ$  HÇ„$˜     H    H‰œ$À  HÇ„$È     H    H‰„$°  HÇ„$¸     H„$  H‹-    H‰(H‹-    H‰hH‹-    H‰hH‹-    H‰hH‹-    H‰h H‹-    H‰h(HÇ„$     HÇ„$     H‰„$  H‹¬$è  H‰hH‹¬$à  €=     …¡   H‰(H‰$H‹œ$  H‰\$H‹œ$  H‰\$è    H‹\$H‰œ$   H‹\$ H‰œ$¨  H    H‰œ$€  HÇ„$ˆ     H¼$  WÀHƒÇĞè    Hœ$  Hƒû „   HÇ„$ø     HÇ„$      H‰œ$ğ  H    H‰$Hœ$  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  H‰Œ$0  H‰H‰„$8  €=     …Š  H‰CH    H‰$Hœ$À  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃH‰Œ$0  H‰H‰„$8  €=     …  H‰CH    H‰$Hœ$°  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ H‰Œ$0  H‰H‰„$8  €=     …œ  H‰CH    H‰$Hœ$   H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ0H‰Œ$0  H‰H‰„$8  €=     …%  H‰CH    H‰$Hœ$€  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ@H‰Œ$0  H‰H‰„$8  €=     …®  H‰CH‹œ$À   H‰$H‹œ$È   H‰\$H    H‰\$HÇD$   H‹œ$ğ  H‰\$ H‹œ$ø  H‰\$(H‹œ$   H‰\$0è    Hœ$`  H‰ØH‹-    H‰+H‹-    H‰kH‹-    H‰kH‹-    H‰kH‹-    H‰k H‹-    H‰k(HÇ„$     HÇ„$     H‰œ$  H‹¬$è  H‰kH‹¬$à  €=     …¨  H‰+H‰$H‹œ$  H‰\$H‹œ$  H‰\$è    H‹\$H‰œ$p  H‹\$ H‰œ$x  H‹    H‰$H‹    H‰\$H    H‰\$HÇD$   H‹œ$°   H‰\$ H‹œ$¸   H‰\$(HÇD$0ÿÿÿÿè    H‹L$8H‹D$@H‹œ$p  H‰$H‹œ$x  H‰\$H‰Œ$`  H‰L$H‰„$h  H‰D$è    H    H‰œ$°  HÇ„$¸     H    H‰œ$   HÇ„$¨     H    H‰„$€  HÇ„$ˆ     H„$0  H‹-    H‰(H‹-    H‰hH‹-    H‰hH‹-    H‰hH‹-    H‰h H‹-    H‰h(HÇ„$     HÇ„$     H‰„$  H‹¬$è  H‰hH‹¬$à  €=     …Ü  H‰(H‰$H‹œ$  H‰\$H‹œ$  H‰\$è    H‹\$H‰œ$  H‹\$ H‰œ$˜  H    H‰œ$À  HÇ„$È     H¼$À  WÀHƒÇĞè    Hœ$À  Hƒû „T  HÇ„$ø     HÇ„$      H‰œ$ğ  H    H‰$Hœ$°  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  H‰Œ$0  H‰H‰„$8  €=     …Å  H‰CH    H‰$Hœ$   H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃH‰Œ$0  H‰H‰„$8  €=     …N  H‰CH    H‰$Hœ$€  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ H‰Œ$0  H‰H‰„$8  €=     …×  H‰CH    H‰$Hœ$  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ0H‰Œ$0  H‰H‰„$8  €=     …`  H‰CH    H‰$Hœ$À  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ@H‰Œ$0  H‰H‰„$8  €=     …é  H‰CH‹œ$À   H‰$H‹œ$È   H‰\$H    H‰\$HÇD$   H‹œ$ğ  H‰\$ H‹œ$ø  H‰\$(H‹œ$   H‰\$0è    Hœ$   H‰ØH‹-    H‰+H‹-    H‰kH‹-    H‰kH‹-    H‰kH‹-    H‰k H‹-    H‰k(HÇ„$     HÇ„$     H‰œ$  H‹¬$è  H‰kH‹¬$à  €=     …ã  H‰+H‰$H‹œ$  H‰\$H‹œ$  H‰\$è    H‹\$H‰œ$`  H‹\$ H‰œ$h  H‹    H‰$H‹    H‰\$H    H‰\$HÇD$   H‹œ$°   H‰\$ H‹œ$¸   H‰\$(HÇD$0ÿÿÿÿè    H‹L$8H‹D$@H‹œ$`  H‰$H‹œ$h  H‰\$H‰Œ$p  H‰L$H‰„$x  H‰D$è    H    H‰œ$€  HÇ„$ˆ     H    H‰œ$  HÇ„$˜     H    H‰„$À  HÇ„$È     H„$Ğ  H‹-    H‰(H‹-    H‰hH‹-    H‰hH‹-    H‰hH‹-    H‰h H‹-    H‰h(HÇ„$     HÇ„$     H‰„$  H‹¬$è  H‰hH‹¬$à  €=     …  H‰(H‰$H‹œ$  H‰\$H‹œ$  H‰\$è    H‹\$H‰œ$°  H‹\$ H‰œ$¸  H    H‰œ$   HÇ„$¨     H¼$p  WÀHƒÇĞè    Hœ$p  Hƒû „  HÇ„$ø     HÇ„$      H‰œ$ğ  H    H‰$Hœ$€  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  H‰Œ$0  H‰H‰„$8  €=     …   H‰CH    H‰$Hœ$  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃH‰Œ$0  H‰H‰„$8  €=     …‰  H‰CH    H‰$Hœ$À  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ H‰Œ$0  H‰H‰„$8  €=     …  H‰CH    H‰$Hœ$°  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ0H‰Œ$0  H‰H‰„$8  €=     …›  H‰CH    H‰$Hœ$   H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ@H‰Œ$0  H‰H‰„$8  €=     …$  H‰CH‹œ$À   H‰$H‹œ$È   H‰\$H    H‰\$HÇD$   H‹œ$ğ  H‰\$ H‹œ$ø  H‰\$(H‹œ$   H‰\$0è    Hœ$   H‰ØH‹-    H‰+H‹-    H‰kH‹-    H‰kH‹-    H‰kH‹-    H‰k H‹-    H‰k(HÇ„$     HÇ„$     H‰œ$  H‹¬$è  H‰kH‹¬$à  €=     …  H‰+H‰$H‹œ$  H‰\$H‹œ$  H‰\$è    H‹\$H‰œ$p  H‹\$ H‰œ$x  H‹    H‰$H‹    H‰\$H    H‰\$HÇD$   H‹œ$°   H‰\$ H‹œ$¸   H‰\$(HÇD$0ÿÿÿÿè    H‹L$8H‹D$@H‹œ$p  H‰$H‹œ$x  H‰\$H‰Œ$`  H‰L$H‰„$h  H‰D$è    H    H‰œ$À  HÇ„$È     H    H‰œ$°  HÇ„$¸     H    H‰„$   HÇ„$¨     H„$p  H‹-    H‰(H‹-    H‰hH‹-    H‰hH‹-    H‰hH‹-    H‰h H‹-    H‰h(HÇ„$     HÇ„$     H‰„$  H‹¬$è  H‰hH‹¬$à  €=     …R  H‰(H‰$H‹œ$  H‰\$H‹œ$  H‰\$è    H‹\$H‰œ$€  H‹\$ H‰œ$ˆ  H    H‰œ$  HÇ„$˜     H¼$   WÀHƒÇĞè    Hœ$   Hƒû „Ê  HÇ„$ø     HÇ„$      H‰œ$ğ  H    H‰$Hœ$À  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  H‰Œ$0  H‰H‰„$8  €=     …;  H‰CH    H‰$Hœ$°  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃH‰Œ$0  H‰H‰„$8  €=     …Ä  H‰CH    H‰$Hœ$   H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ H‰Œ$0  H‰H‰„$8  €=     …M  H‰CH    H‰$Hœ$€  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ0H‰Œ$0  H‰H‰„$8  €=     …Ö  H‰CH    H‰$Hœ$  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ@H‰Œ$0  H‰H‰„$8  €=     …_  H‰CH‹œ$À   H‰$H‹œ$È   H‰\$H    H‰\$HÇD$   H‹œ$ğ  H‰\$ H‹œ$ø  H‰\$(H‹œ$   H‰\$0è    Hœ$@  H‰ØH‹-    H‰+H‹-    H‰kH‹-    H‰kH‹-    H‰kH‹-    H‰k H‹-    H‰k(HÇ„$     HÇ„$     H‰œ$  H‹¬$è  H‰kH‹¬$à  €=     …Y  H‰+H‰$H‹œ$  H‰\$H‹œ$  H‰\$è    H‹L$H‹D$ H‰Œ$`  H‰$H‰„$h  H‰D$H‹    H‰\$H‹    H‰\$è    H    H‰œ$°  HÇ„$¸     H    H‰œ$   HÇ„$¨     H    H‰„$€  HÇ„$ˆ     H„$  H‹-    H‰(H‹-    H‰hH‹-    H‰hH‹-    H‰hH‹-    H‰h H‹-    H‰h(HÇ„$     HÇ„$     H‰„$  H‹¬$è  H‰hH‹¬$à  €=     …ı	  H‰(H‰$H‹œ$  H‰\$H‹œ$  H‰\$è    H‹\$H‰œ$  H‹\$ H‰œ$˜  H    H‰œ$À  HÇ„$È     H¼$Ğ  WÀHƒÇĞè    Hœ$Ğ  Hƒû „u	  HÇ„$ø     HÇ„$      H‰œ$ğ  H    H‰$Hœ$°  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  H‰Œ$0  H‰H‰„$8  €=     …æ  H‰CH    H‰$Hœ$   H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃH‰Œ$0  H‰H‰„$8  €=     …o  H‰CH    H‰$Hœ$€  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ H‰Œ$0  H‰H‰„$8  €=     …ø  H‰CH    H‰$Hœ$  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ0H‰Œ$0  H‰H‰„$8  €=     …  H‰CH    H‰$Hœ$À  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ@H‰Œ$0  H‰H‰„$8  €=     …
+  H‰CH‹œ$À   H‰$H‹œ$È   H‰\$H    H‰\$HÇD$   H‹œ$ğ  H‰\$ H‹œ$ø  H‰\$(H‹œ$   H‰\$0è    Hœ$à  H‰ØH‹-    H‰+H‹-    H‰kH‹-    H‰kH‹-    H‰kH‹-    H‰k H‹-    H‰k(HÇ„$     HÇ„$     H‰œ$  H‹¬$è  H‰kH‹¬$à  €=     …  H‰+H‰$H‹œ$  H‰\$H‹œ$  H‰\$è    H‹L$H‹D$ H‰Œ$`  H‰$H‰„$h  H‰D$H‹    H‰\$H‹    H‰\$è    H    H‰œ$   HÇ„$¨     H    H‰œ$€  HÇ„$ˆ     H    H‰„$  HÇ„$˜     H„$@  H‹-    H‰(H‹-    H‰hH‹-    H‰hH‹-    H‰hHÇ„$     HÇ„$     H‰„$  H‹¬$è  H‰hH‹¬$à  €=     …¾  H‰(H‰$H‹œ$  H‰\$H‹œ$  H‰\$è    H‹\$H‰œ$À  H‹\$ H‰œ$È  H    H‰œ$°  HÇ„$¸     H¼$€  WÀHƒÇĞè    Hœ$€  Hƒû „6  HÇ„$ø     HÇ„$      H‰œ$ğ  H    H‰$Hœ$   H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  H‰Œ$0  H‰H‰„$8  €=     …§  H‰CH    H‰$Hœ$€  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃH‰Œ$0  H‰H‰„$8  €=     …0  H‰CH    H‰$Hœ$  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ H‰Œ$0  H‰H‰„$8  €=     …¹  H‰CH    H‰$Hœ$À  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ0H‰Œ$0  H‰H‰„$8  €=     …B  H‰CH    H‰$Hœ$°  H‰\$HÇD$    è    H‹L$H‹D$ H‹œ$ğ  HƒÃ@H‰Œ$0  H‰H‰„$8  €=     …Ë  H‰CH‹œ$À   H‰$H‹œ$È   H‰\$H    H‰\$HÇD$   H‹œ$ğ  H‰\$ H‹œ$ø  H‰\$(H‹œ$   H‰\$0è    Hœ$   H‰ØH‹-    H‰+H‹-    H‰kH‹-    H‰kH‹-    H‰kHÇ„$     HÇ„$     H‰œ$  H‹¬$è  H‰kH‹¬$à  €=     …Û   H‰+H‰$H‹œ$  H‰\$H‹œ$  H‰\$è    H‹\$H‰œ$`  H‹\$ H‰œ$h  H‹    H‰$H‹    H‰\$H    H‰\$HÇD$   H‹œ$°   H‰\$ H‹œ$¸   H‰\$(HÇD$0ÿÿÿÿè    H‹L$8H‹D$@H‹œ$`  H‰$H‹œ$h  H‰\$H‰Œ$p  H‰L$H‰„$x  H‰D$è    éiÒÿÿH‰$H‰l$è    H‹„$  éÿÿÿLCL‰$H‰D$è    é"şÿÿLCL‰$H‰D$è    é«ıÿÿLCL‰$H‰D$è    é4ıÿÿLCL‰$H‰D$è    é½üÿÿLCL‰$H‰D$è    éFüÿÿ‰éÃûÿÿH‰$H‰l$è    H‹„$  é*ûÿÿH‰$H‰l$è    H‹„$  éäùÿÿLCL‰$H‰D$è    éãøÿÿLCL‰$H‰D$è    éløÿÿLCL‰$H‰D$è    éõ÷ÿÿLCL‰$H‰D$è    é~÷ÿÿLCL‰$H‰D$è    é÷ÿÿ‰é„öÿÿH‰$H‰l$è    H‹„$  éëõÿÿH‰$H‰l$è    H‹„$  éôÿÿLCL‰$H‰D$è    éóÿÿLCL‰$H‰D$è    éóÿÿLCL‰$H‰D$è    é òÿÿLCL‰$H‰D$è    é)òÿÿLCL‰$H‰D$è    é²ñÿÿ‰é/ñÿÿH‰$H‰l$è    H‹„$  é–ğÿÿH‰$H‰l$è    H‹„$  éÊîÿÿLCL‰$H‰D$è    éÉíÿÿLCL‰$H‰D$è    éRíÿÿLCL‰$H‰D$è    éÛìÿÿLCL‰$H‰D$è    édìÿÿLCL‰$H‰D$è    éíëÿÿ‰éjëÿÿH‰$H‰l$è    H‹„$  éÑêÿÿH‰$H‰l$è    H‹„$  ééÿÿLCL‰$H‰D$è    éèÿÿLCL‰$H‰D$è    éçÿÿLCL‰$H‰D$è    éçÿÿLCL‰$H‰D$è    éŸæÿÿLCL‰$H‰D$è    é(æÿÿ‰é¥åÿÿH‰$H‰l$è    H‹„$  éåÿÿH‰$H‰l$è    H‹„$  é@ãÿÿLCL‰$H‰D$è    é?âÿÿLCL‰$H‰D$è    éÈáÿÿLCL‰$H‰D$è    éQáÿÿLCL‰$H‰D$è    éÚàÿÿLCL‰$H‰D$è    écàÿÿ‰éàßÿÿH‰$H‰l$è    H‹„$  éGßÿÿH‰$H‰l$è    H‹„$  é{İÿÿLCL‰$H‰D$è    ézÜÿÿLCL‰$H‰D$è    éÜÿÿLCL‰$H‰D$è    éŒÛÿÿLCL‰$H‰D$è    éÛÿÿLCL‰$H‰D$è    éÚÿÿ‰éÚÿÿH‰$H‰l$è    H‹„$  é‚ÙÿÿLCL‰$H‰D$è    é3ØÿÿLCL‰$H‰D$è    é¼×ÿÿLCL‰$H‰D$è    éE×ÿÿLCL‰$H‰D$è    éÎÖÿÿLCL‰$H‰D$è    éWÖÿÿ‰éÔÕÿÿH‰$H‰l$è    H‹„$  éõÔÿÿH‰$H‰l$è    H‹„$  é¿ÓÿÿLCL‰$H‰D$è    éÔÒÿÿLCL‰$H‰D$è    é]ÒÿÿLCL‰$H‰D$è    éæÑÿÿLCL‰$H‰D$è    éoÑÿÿLCL‰$H‰D$è    éøĞÿÿ‰éuĞÿÿH‰$H‰l$è    H‹„$  éÜÏÿÿH‰$H‰T$è    H‹„$  é¦Îÿÿè    H‰$H‰l$è    H‹„$  é5ÁÿÿLCL‰$H‰D$è    é4ÀÿÿLCL‰$H‰D$è    é½¿ÿÿLCL‰$H‰D$è    éF¿ÿÿLCL‰$H‰D$è    éÏ¾ÿÿLCL‰$H‰D$è    éX¾ÿÿ‰éÕ½ÿÿH‰$H‰l$è    H‹„$  é<½ÿÿLCL‰$H‰D$è    éí»ÿÿLCL‰$H‰D$è    év»ÿÿLCL‰$H‰D$è    éÿºÿÿLCL‰$H‰D$è    éˆºÿÿLCL‰$H‰D$è    éºÿÿ‰é¹ÿÿH‰$H‰l$è    H‹„$  éõ¸ÿÿH‰$H‰l$è    H‹„$  é¿·ÿÿLCL‰$H‰D$è    éÔ¶ÿÿLCL‰$H‰D$è    é]¶ÿÿLCL‰$H‰D$è    éæµÿÿLCL‰$H‰D$è    éoµÿÿLCL‰$H‰D$è    éø´ÿÿ‰éu´ÿÿH‰$H‰l$è    H‹„$  éÜ³ÿÿH‰$H‰l$è    H‹„$  é¦²ÿÿLCL‰$H‰D$è    é»±ÿÿLCL‰$H‰D$è    éD±ÿÿLCL‰$H‰D$è    éÍ°ÿÿLCL‰$H‰D$è    éV°ÿÿLCL‰$H‰D$è    éß¯ÿÿ‰é\¯ÿÿH‰$H‰l$è    H‹„$  éÃ®ÿÿH‰$H‰l$è    H‹„$  é­ÿÿLCL‰$H‰D$è    é¢¬ÿÿLCL‰$H‰D$è    é+¬ÿÿLCL‰$H‰D$è    é´«ÿÿLCL‰$H‰D$è    é=«ÿÿLCL‰$H‰D$è    éÆªÿÿ‰éCªÿÿLCL‰$H‰D$è    é½¨ÿÿ‰éR¨ÿÿè    ‰%    é§ÿÿè    é‹§ÿÿé™¦ÿÿ‰E é8¦ÿÿH‹    1íH9è„˜  H‹    H‰„$P  H‰ÁH‰”$X  1ÛH‰\$pH‰\$xH‰„$   H‰”$˜   H‰”$¨   HÇD$P   1ÛH‰œ$€   H‰œ$ˆ   H‰ÃH‰„$    1íH9ètH‹[H-    H9ë…  HÇÀ   < …û   H    H‰$è    H‹D$H‰ÇHƒø „Ò   WÀè    H‰D$XH‹¬$    H‰(H‹¬$¨   €=     …‰   H‰hH‹l$PH‰hH‰D$XH‹    1íH9èt:H‹T$XH‰ÁH‰ĞH‰Œ$€   H‰„$ˆ   H‰L$pH‰D$xH‰Œ$P  H‰„$X  é÷¤ÿÿH    H‰$H    H‰\$H    H‰\$è    H‹D$ë—L@L‰$H‰l$è    H‹D$Xé_ÿÿÿ‰ é'ÿÿÿH‰Ğéwÿÿÿ1ÀéîşÿÿH    H‰$H    H‰\$H    H‰\$è    H‹D$é6şÿÿè    é»£ÿÿÌÌÌÌÌÌÌÌÌÌÌ¤      j€  runtime.duffzero   „Š  runtime.duffzero   È  runtime.duffzero   ¸ª  runtime.duffzero   œ  >github.com/beego/bee/logger.Log   ²  Rgo.string."Argument [appname] is missing"   Ø  \github.com/beego/bee/logger.(*BeeLogger).Fatal   ö  *flag.(*FlagSet).Parse   Î       ì  >github.com/beego/bee/logger.Log   ²  \github.com/beego/bee/logger.(*BeeLogger).Error   Š  Fgithub.com/beego/bee/utils.CheckEnv   Ş
+  runtime.convI2E   ´ (runtime.writeBarrier   Ø  >github.com/beego/bee/logger.Log   î  go.string."%s"   â  ^github.com/beego/bee/logger.(*BeeLogger).Fatalf   ğ Ngithub.com/beego/bee/generate.SQLDriver   Š  "go.string."mysql"   ˜  Ngithub.com/beego/bee/generate.SQLDriver   ¦ Ngithub.com/beego/bee/generate.SQLDriver   ¼  >github.com/beego/bee/logger.Log   Ò  6go.string."Creating API..."   ø  Zgithub.com/beego/bee/logger.(*BeeLogger).Info   Ä  os.MkdirAll   Ò  (go.string."\x1b[32m"   ˆ  &go.string."\x1b[1m"   ¾  (go.string."\x1b[21m"   ´  &go.string."\x1b[0m"   „ª  runtime.duffzero   ö  type.string   ´  runtime.convT2E   Š (runtime.writeBarrier   ®  type.string   ì  runtime.convT2E   Ê (runtime.writeBarrier   î  type.string   ¬  runtime.convT2E   Š (runtime.writeBarrier   ®  type.string   ì  runtime.convT2E   Ê (runtime.writeBarrier   î  type.string   ¬  runtime.convT2E   Š (runtime.writeBarrier   à  Fgo.string."\t%s%screate%s\t %s%s\n"   Ô  fmt.Fprintf   ø  """.statictmp_0141   Œ """.statictmp_0141   ¢  """.statictmp_0141   ¸0 """.statictmp_0141   ´ (runtime.writeBarrier     $path/filepath.Join   î  os.Mkdir   ü  (go.string."\x1b[32m"   ²  &go.string."\x1b[1m"   è  (go.string."\x1b[21m"   ®  """.statictmp_0145   Â """.statictmp_0145   Ø  """.statictmp_0145   î0 """.statictmp_0145   ê  (runtime.writeBarrier   Ä!  $path/filepath.Join   †"  &go.string."\x1b[0m"   Ö"ª  runtime.duffzero   È#  type.string   †$  runtime.convT2E   Ü$ (runtime.writeBarrier   €%  type.string   ¾%  runtime.convT2E   œ& (runtime.writeBarrier   À&  type.string   ş&  runtime.convT2E   Ü' (runtime.writeBarrier   €(  type.string   ¾(  runtime.convT2E   œ) (runtime.writeBarrier   À)  type.string   ş)  runtime.convT2E   Ü* (runtime.writeBarrier   ²+  Fgo.string."\t%s%screate%s\t %s%s\n"   ¦,  fmt.Fprintf   Ê,  """.statictmp_0158   Ş, """.statictmp_0158   ô,  """.statictmp_0158   Š-0 """.statictmp_0158   †. (runtime.writeBarrier   à.  $path/filepath.Join   À/  os.Mkdir   Î/  (go.string."\x1b[32m"   „0  &go.string."\x1b[1m"   º0  (go.string."\x1b[21m"   €1  """.statictmp_0162   ”1 """.statictmp_0162   ª1  """.statictmp_0162   À10 """.statictmp_0162   ¼2 (runtime.writeBarrier   –3  $path/filepath.Join   Ø3  &go.string."\x1b[0m"   ¨4ª  runtime.duffzero   š5  type.string   Ø5  runtime.convT2E   ®6 (runtime.writeBarrier   Ò6  type.string   7  runtime.convT2E   î7 (runtime.writeBarrier   ’8  type.string   Ğ8  runtime.convT2E   ®9 (runtime.writeBarrier   Ò9  type.string   :  runtime.convT2E   î: (runtime.writeBarrier   ’;  type.string   Ğ;  runtime.convT2E   ®< (runtime.writeBarrier   „=  Fgo.string."\t%s%screate%s\t %s%s\n"   ø=  fmt.Fprintf   œ>  """.statictmp_0175   °> """.statictmp_0175   Æ>  """.statictmp_0175   Ü>0 """.statictmp_0175   Ø? (runtime.writeBarrier   ²@  $path/filepath.Join   ’A  os.Mkdir    A  (go.string."\x1b[32m"   ÖA  &go.string."\x1b[1m"   ŒB  (go.string."\x1b[21m"   ÒB  """.statictmp_0179   æB """.statictmp_0179   üB  """.statictmp_0179   ’C0 """.statictmp_0179   D (runtime.writeBarrier   èD  $path/filepath.Join   ªE  &go.string."\x1b[0m"   úEª  runtime.duffzero   ìF  type.string   ªG  runtime.convT2E   €H (runtime.writeBarrier   ¤H  type.string   âH  runtime.convT2E   ÀI (runtime.writeBarrier   äI  type.string   ¢J  runtime.convT2E   €K (runtime.writeBarrier   ¤K  type.string   âK  runtime.convT2E   ÀL (runtime.writeBarrier   äL  type.string   ¢M  runtime.convT2E   €N (runtime.writeBarrier   ÖN  Fgo.string."\t%s%screate%s\t %s%s\n"   ÊO  fmt.Fprintf   ØO  (go.string."\x1b[32m"   P  &go.string."\x1b[1m"   ÄP  (go.string."\x1b[21m"   ŠQ  """.statictmp_0192   Q """.statictmp_0192   ´Q  """.statictmp_0192   ÊQ0 """.statictmp_0192   àQ@ """.statictmp_0192   öQP """.statictmp_0192   òR (runtime.writeBarrier   ÌS  $path/filepath.Join   T  &go.string."\x1b[0m"   ŞTª  runtime.duffzero   ĞU  type.string   V  runtime.convT2E   äV (runtime.writeBarrier   ˆW  type.string   ÆW  runtime.convT2E   ¤X (runtime.writeBarrier   ÈX  type.string   †Y  runtime.convT2E   äY (runtime.writeBarrier   ˆZ  type.string   ÆZ  runtime.convT2E   ¤[ (runtime.writeBarrier   È[  type.string   †\  runtime.convT2E   ä\ (runtime.writeBarrier   º]  Fgo.string."\t%s%screate%s\t %s%s\n"   ®^  fmt.Fprintf   Ò^  """.statictmp_0205   æ^ """.statictmp_0205   ü^  """.statictmp_0205   ’_0 """.statictmp_0205   ¨_@ """.statictmp_0205   ¾_P """.statictmp_0205   º` (runtime.writeBarrier   ”a  $path/filepath.Join    b  $path/filepath.Base   Âb  "".apiconf   Øb "".apiconf   ğb  0go.string."{{.Appname}}"   Üc  strings.Replace   àd  Lgithub.com/beego/bee/utils.WriteToFile   e Jgithub.com/beego/bee/generate.SQLConn   °e  (go.string."\x1b[32m"   æe  &go.string."\x1b[1m"   œf  (go.string."\x1b[21m"   âf  """.statictmp_0209   öf """.statictmp_0209   Œg  """.statictmp_0209   ¢g0 """.statictmp_0209   şg (runtime.writeBarrier   Øh  $path/filepath.Join   ši  &go.string."\x1b[0m"   êiª  runtime.duffzero   Üj  type.string   šk  runtime.convT2E   ğk (runtime.writeBarrier   ”l  type.string   Òl  runtime.convT2E   °m (runtime.writeBarrier   Ôm  type.string   ’n  runtime.convT2E   ğn (runtime.writeBarrier   ”o  type.string   Òo  runtime.convT2E   °p (runtime.writeBarrier   Ôp  type.string   ’q  runtime.convT2E   ğq (runtime.writeBarrier   Ær  Fgo.string."\t%s%screate%s\t %s%s\n"   ºs  fmt.Fprintf   Ès   "".apiMainconngo   Şs  "".apiMainconngo   ös  0go.string."{{.Appname}}"   ât  strings.Replace   ¶u  6go.string."{{.DriverName}}"   àu  Ngithub.com/beego/bee/generate.SQLDriver   øu Ngithub.com/beego/bee/generate.SQLDriver   v  strings.Replace   àv Ngithub.com/beego/bee/generate.SQLDriver   ‚w  Ngithub.com/beego/bee/generate.SQLDriver   ˜w Ngithub.com/beego/bee/generate.SQLDriver   °w  "go.string."mysql"   Öw   runtime.eqstring   ²x  4go.string."{{.DriverPkg}}"   Üx  `go.string."_ \"github.com/go-sql-driver/mysql\""   ”y  strings.Replace   ìy  """.statictmp_0222   €z """.statictmp_0222   –z  """.statictmp_0222   ¬z0 """.statictmp_0222   ¨{ (runtime.writeBarrier   ‚|  $path/filepath.Join   Ä|  Jgithub.com/beego/bee/generate.SQLConn   Ö|  Zgithub.com/beego/bee/utils.(*DocValue).String   ª}  *go.string."{{.conn}}"   –~  strings.Replace   š  Lgithub.com/beego/bee/utils.WriteToFile   °€  Ptype.github.com/beego/bee/utils.DocValue   Æ€  Ngithub.com/beego/bee/generate.SQLDriver   ì€  runtime.convT2E   Â (runtime.writeBarrier   æ  >github.com/beego/bee/logger.Log   ü  Dgo.string."Using '%s' as 'driver'"   ğ‚  \github.com/beego/bee/logger.(*BeeLogger).Infof   †„  Ptype.github.com/beego/bee/utils.DocValue   œ„  Jgithub.com/beego/bee/generate.SQLConn   Â„  runtime.convT2E   ˜… (runtime.writeBarrier   ¼…  >github.com/beego/bee/logger.Log   Ò…  @go.string."Using '%s' as 'conn'"   Æ†  \github.com/beego/bee/logger.(*BeeLogger).Infof   Ü‡  Ptype.github.com/beego/bee/utils.DocValue   ò‡  Hgithub.com/beego/bee/generate.Tables   ˜ˆ  runtime.convT2E   îˆ (runtime.writeBarrier   ’‰  >github.com/beego/bee/logger.Log   ¨‰  Dgo.string."Using '%s' as 'tables'"   œŠ  \github.com/beego/bee/logger.(*BeeLogger).Infof   ªŠ  Ngithub.com/beego/bee/generate.SQLDriver   ÀŠ Ngithub.com/beego/bee/generate.SQLDriver   ØŠ  Jgithub.com/beego/bee/generate.SQLConn   ğŠ Jgithub.com/beego/bee/generate.SQLConn   ˆ‹  go.string."3"   ²‹  Hgithub.com/beego/bee/generate.Tables   Ê‹ Hgithub.com/beego/bee/generate.Tables   ’Œ  Zgithub.com/beego/bee/generate.GenerateAppcode    Œ  >github.com/beego/bee/logger.Log   ¶Œ  Rgo.string."New API successfully created!"   ÜŒ  `github.com/beego/bee/logger.(*BeeLogger).Success   ¨  .runtime.writebarrierptr   ä  .runtime.writebarrierptr      .runtime.writebarrierptr   Ô  .runtime.writebarrierptr   ü Ngithub.com/beego/bee/generate.SQLDriver     Ngithub.com/beego/bee/generate.SQLDriver   ´ Ngithub.com/beego/bee/generate.SQLDriver   Ì  (go.string."postgres"   ò   runtime.eqstring   Î  4go.string."{{.DriverPkg}}"   ø  Fgo.string."_ \"github.com/lib/pq\""   °‘  strings.Replace   ’’  .runtime.writebarrierptr   À’  .runtime.writebarrierptr   î’  .runtime.writebarrierptr   œ“  .runtime.writebarrierptr   Ê“  .runtime.writebarrierptr   ş“  .runtime.writebarrierptr   ¼”  """.statictmp_0241   Ğ” """.statictmp_0241   æ”  """.statictmp_0241   ü”0 """.statictmp_0241   Ø• (runtime.writeBarrier   ²–  $path/filepath.Join   ’—  os.Mkdir    —  (go.string."\x1b[32m"   Ö—  &go.string."\x1b[1m"   Œ˜  (go.string."\x1b[21m"   Ò˜  """.statictmp_0245   æ˜ """.statictmp_0245   ü˜  """.statictmp_0245   ’™0 """.statictmp_0245   š (runtime.writeBarrier   èš  $path/filepath.Join   ª›  &go.string."\x1b[0m"   ú›ª  runtime.duffzero   ìœ  type.string   ª  runtime.convT2E   € (runtime.writeBarrier   ¤  type.string   â  runtime.convT2E   ÀŸ (runtime.writeBarrier   äŸ  type.string   ¢   runtime.convT2E   €¡ (runtime.writeBarrier   ¤¡  type.string   â¡  runtime.convT2E   À¢ (runtime.writeBarrier   ä¢  type.string   ¢£  runtime.convT2E   €¤ (runtime.writeBarrier   Ö¤  Fgo.string."\t%s%screate%s\t %s%s\n"   Ê¥  fmt.Fprintf   î¥  """.statictmp_0258   ‚¦ """.statictmp_0258   ˜¦  """.statictmp_0258   ®¦0 """.statictmp_0258   ª§ (runtime.writeBarrier   „¨  $path/filepath.Join   ä¨  os.Mkdir   ò¨  (go.string."\x1b[32m"   ¨©  &go.string."\x1b[1m"   Ş©  (go.string."\x1b[21m"   ¤ª  """.statictmp_0262   ¸ª """.statictmp_0262   Îª  """.statictmp_0262   äª0 """.statictmp_0262   à« (runtime.writeBarrier   º¬  $path/filepath.Join    ­  go.string."\\"   Æ­  *runtime.concatstring2   ˆ®  &go.string."\x1b[0m"   Ø®ª  runtime.duffzero   Ê¯  type.string   ˆ°  runtime.convT2E   Ş° (runtime.writeBarrier   ‚±  type.string   À±  runtime.convT2E   ² (runtime.writeBarrier   Â²  type.string   €³  runtime.convT2E   Ş³ (runtime.writeBarrier   ‚´  type.string   À´  runtime.convT2E   µ (runtime.writeBarrier   Âµ  type.string   €¶  runtime.convT2E   Ş¶ (runtime.writeBarrier   ´·  Fgo.string."\t%s%screate%s\t %s%s\n"   ¨¸  fmt.Fprintf   ¶¸  (go.string."\x1b[32m"   ì¸  &go.string."\x1b[1m"   ¢¹  (go.string."\x1b[21m"   è¹  """.statictmp_0275   ü¹ """.statictmp_0275   ’º  """.statictmp_0275   ¨º0 """.statictmp_0275   ¾º@ """.statictmp_0275   ÔºP """.statictmp_0275   Ğ» (runtime.writeBarrier   ª¼  $path/filepath.Join   ì¼  &go.string."\x1b[0m"   ¼½ª  runtime.duffzero   ®¾  type.string   ì¾  runtime.convT2E   Â¿ (runtime.writeBarrier   æ¿  type.string   ¤À  runtime.convT2E   ‚Á (runtime.writeBarrier   ¦Á  type.string   äÁ  runtime.convT2E   ÂÂ (runtime.writeBarrier   æÂ  type.string   ¤Ã  runtime.convT2E   ‚Ä (runtime.writeBarrier   ¦Ä  type.string   äÄ  runtime.convT2E   ÂÅ (runtime.writeBarrier   ˜Æ  Fgo.string."\t%s%screate%s\t %s%s\n"   ŒÇ  fmt.Fprintf   °Ç  """.statictmp_0288   ÄÇ """.statictmp_0288   ÚÇ  """.statictmp_0288   ğÇ0 """.statictmp_0288   †È@ """.statictmp_0288   œÈP """.statictmp_0288   ˜É (runtime.writeBarrier   òÉ  $path/filepath.Join   ´Ê  """.apiControllers   ÊÊ """.apiControllers   âÊ  0go.string."{{.Appname}}"   ÎË  strings.Replace   ÒÌ  Lgithub.com/beego/bee/utils.WriteToFile   àÌ  (go.string."\x1b[32m"   –Í  &go.string."\x1b[1m"   ÌÍ  (go.string."\x1b[21m"   ’Î  """.statictmp_0292   ¦Î """.statictmp_0292   ¼Î  """.statictmp_0292   ÒÎ0 """.statictmp_0292   èÎ@ """.statictmp_0292   şÎP """.statictmp_0292   úÏ (runtime.writeBarrier   ÔĞ  $path/filepath.Join   –Ñ  &go.string."\x1b[0m"   æÑª  runtime.duffzero   ØÒ  type.string   –Ó  runtime.convT2E   ìÓ (runtime.writeBarrier   Ô  type.string   ÎÔ  runtime.convT2E   ¬Õ (runtime.writeBarrier   ĞÕ  type.string   Ö  runtime.convT2E   ìÖ (runtime.writeBarrier   ×  type.string   Î×  runtime.convT2E   ¬Ø (runtime.writeBarrier   ĞØ  type.string   Ù  runtime.convT2E   ìÙ (runtime.writeBarrier   ÂÚ  Fgo.string."\t%s%screate%s\t %s%s\n"   ¶Û  fmt.Fprintf   ÚÛ  """.statictmp_0305   îÛ """.statictmp_0305   „Ü  """.statictmp_0305   šÜ0 """.statictmp_0305   °Ü@ """.statictmp_0305   ÆÜP """.statictmp_0305   Âİ (runtime.writeBarrier   œŞ  $path/filepath.Join   ŞŞ  $"".apiControllers2   ôŞ $"".apiControllers2   Œß  0go.string."{{.Appname}}"   øß  strings.Replace   üà  Lgithub.com/beego/bee/utils.WriteToFile   Šá  (go.string."\x1b[32m"   Àá  &go.string."\x1b[1m"   öá  (go.string."\x1b[21m"   ¼â  """.statictmp_0309   Ğâ """.statictmp_0309   æâ  """.statictmp_0309   üâ0 """.statictmp_0309   ’ã@ """.statictmp_0309   ¨ãP """.statictmp_0309   ¤ä (runtime.writeBarrier   şä  $path/filepath.Join   Àå  &go.string."\x1b[0m"   æª  runtime.duffzero   ‚ç  type.string   Àç  runtime.convT2E   –è (runtime.writeBarrier   ºè  type.string   øè  runtime.convT2E   Öé (runtime.writeBarrier   úé  type.string   ¸ê  runtime.convT2E   –ë (runtime.writeBarrier   ºë  type.string   øë  runtime.convT2E   Öì (runtime.writeBarrier   úì  type.string   ¸í  runtime.convT2E   –î (runtime.writeBarrier   ìî  Fgo.string."\t%s%screate%s\t %s%s\n"   àï  fmt.Fprintf   „ğ  """.statictmp_0322   ˜ğ """.statictmp_0322   ®ğ  """.statictmp_0322   Äğ0 """.statictmp_0322   Úğ@ """.statictmp_0322   ğğP """.statictmp_0322   ìñ (runtime.writeBarrier   Æò  $path/filepath.Join   ˆó  "".apiTests   ó "".apiTests   ¶ó  0go.string."{{.Appname}}"   ¢ô  strings.Replace   ¦õ  Lgithub.com/beego/bee/utils.WriteToFile   ´õ  (go.string."\x1b[32m"   êõ  &go.string."\x1b[1m"    ö  (go.string."\x1b[21m"   æö  """.statictmp_0326   úö """.statictmp_0326   ÷  """.statictmp_0326   ¦÷0 """.statictmp_0326   ¼÷@ """.statictmp_0326   Ò÷P """.statictmp_0326   Îø (runtime.writeBarrier   ¨ù  $path/filepath.Join   êù  &go.string."\x1b[0m"   ºúª  runtime.duffzero   ¬û  type.string   êû  runtime.convT2E   Àü (runtime.writeBarrier   äü  type.string   ¢ı  runtime.convT2E   €ş (runtime.writeBarrier   ¤ş  type.string   âş  runtime.convT2E   Àÿ (runtime.writeBarrier   äÿ  type.string   ¢€  runtime.convT2E   € (runtime.writeBarrier   ¤  type.string   â  runtime.convT2E   À‚ (runtime.writeBarrier   –ƒ  Fgo.string."\t%s%screate%s\t %s%s\n"   Š„  fmt.Fprintf   ®„  """.statictmp_0339   Â„ """.statictmp_0339   Ø„  """.statictmp_0339   î„0 """.statictmp_0339   „…@ """.statictmp_0339   š…P """.statictmp_0339   –† (runtime.writeBarrier   ğ†  $path/filepath.Join   ²‡  "".apirouter   È‡ "".apirouter   à‡  0go.string."{{.Appname}}"   Ìˆ  strings.Replace   Ğ‰  Lgithub.com/beego/bee/utils.WriteToFile   Ş‰  (go.string."\x1b[32m"   ”Š  &go.string."\x1b[1m"   ÊŠ  (go.string."\x1b[21m"   ‹  """.statictmp_0343   ¤‹ """.statictmp_0343   º‹  """.statictmp_0343   Ğ‹0 """.statictmp_0343   æ‹@ """.statictmp_0343   ü‹P """.statictmp_0343   øŒ (runtime.writeBarrier   Ò  $path/filepath.Join   ”  &go.string."\x1b[0m"   äª  runtime.duffzero   Ö  type.string   ”  runtime.convT2E   ê (runtime.writeBarrier   ‘  type.string   Ì‘  runtime.convT2E   ª’ (runtime.writeBarrier   Î’  type.string   Œ“  runtime.convT2E   ê“ (runtime.writeBarrier   ”  type.string   Ì”  runtime.convT2E   ª• (runtime.writeBarrier   Î•  type.string   Œ–  runtime.convT2E   ê– (runtime.writeBarrier   À—  Fgo.string."\t%s%screate%s\t %s%s\n"   ´˜  fmt.Fprintf   Ø˜  """.statictmp_0356   ì˜ """.statictmp_0356   ‚™  """.statictmp_0356   ˜™0 """.statictmp_0356   ®™@ """.statictmp_0356   Ä™P """.statictmp_0356   Àš (runtime.writeBarrier   š›  $path/filepath.Join   î›  "".APIModels   †œ "".APIModels   šœ  Lgithub.com/beego/bee/utils.WriteToFile   ¨œ  (go.string."\x1b[32m"   Şœ  &go.string."\x1b[1m"   ”  (go.string."\x1b[21m"   Ú  """.statictmp_0360   î """.statictmp_0360   „  """.statictmp_0360   š0 """.statictmp_0360   °@ """.statictmp_0360   ÆP """.statictmp_0360   ÂŸ (runtime.writeBarrier   œ   $path/filepath.Join   Ş   &go.string."\x1b[0m"   ®¡ª  runtime.duffzero    ¢  type.string   Ş¢  runtime.convT2E   ´£ (runtime.writeBarrier   Ø£  type.string   –¤  runtime.convT2E   ô¤ (runtime.writeBarrier   ˜¥  type.string   Ö¥  runtime.convT2E   ´¦ (runtime.writeBarrier   Ø¦  type.string   –§  runtime.convT2E   ô§ (runtime.writeBarrier   ˜¨  type.string   Ö¨  runtime.convT2E   ´© (runtime.writeBarrier   Šª  Fgo.string."\t%s%screate%s\t %s%s\n"   şª  fmt.Fprintf   ¢«  """.statictmp_0373   ¶« """.statictmp_0373   Ì«  """.statictmp_0373   â«0 """.statictmp_0373   ø«@ """.statictmp_0373   ¬P """.statictmp_0373   Š­ (runtime.writeBarrier   ä­  $path/filepath.Join   ¸®  "".APIModels2   Ğ® "".APIModels2   ä®  Lgithub.com/beego/bee/utils.WriteToFile   ò®  (go.string."\x1b[32m"   ¨¯  &go.string."\x1b[1m"   Ş¯  (go.string."\x1b[21m"   ¤°  """.statictmp_0377   ¸° """.statictmp_0377   Î°  """.statictmp_0377   ä°0 """.statictmp_0377   à± (runtime.writeBarrier   º²  $path/filepath.Join   ü²  &go.string."\x1b[0m"   Ì³ª  runtime.duffzero   ¾´  type.string   ü´  runtime.convT2E   Òµ (runtime.writeBarrier   öµ  type.string   ´¶  runtime.convT2E   ’· (runtime.writeBarrier   ¶·  type.string   ô·  runtime.convT2E   Ò¸ (runtime.writeBarrier   ö¸  type.string   ´¹  runtime.convT2E   ’º (runtime.writeBarrier   ¶º  type.string   ôº  runtime.convT2E   Ò» (runtime.writeBarrier   ¨¼  Fgo.string."\t%s%screate%s\t %s%s\n"   œ½  fmt.Fprintf   À½  """.statictmp_0390   Ô½ """.statictmp_0390   ê½  """.statictmp_0390   €¾0 """.statictmp_0390   ü¾ (runtime.writeBarrier   Ö¿  $path/filepath.Join   ˜À  "".apiMaingo   ®À "".apiMaingo   ÆÀ  0go.string."{{.Appname}}"   ²Á  strings.Replace   ¶Â  Lgithub.com/beego/bee/utils.WriteToFile   ÜÂ  .runtime.writebarrierptr   šÃ  .runtime.writebarrierptr   ÈÃ  .runtime.writebarrierptr   öÃ  .runtime.writebarrierptr   ¤Ä  .runtime.writebarrierptr   ÒÄ  .runtime.writebarrierptr   †Å  .runtime.writebarrierptr   ¼Å  .runtime.writebarrierptr   úÅ  .runtime.writebarrierptr   ¨Æ  .runtime.writebarrierptr   ÖÆ  .runtime.writebarrierptr   „Ç  .runtime.writebarrierptr   ²Ç  .runtime.writebarrierptr   æÇ  .runtime.writebarrierptr   œÈ  .runtime.writebarrierptr   ÚÈ  .runtime.writebarrierptr   ˆÉ  .runtime.writebarrierptr   ¶É  .runtime.writebarrierptr   äÉ  .runtime.writebarrierptr   ’Ê  .runtime.writebarrierptr   ÆÊ  .runtime.writebarrierptr   üÊ  .runtime.writebarrierptr   ºË  .runtime.writebarrierptr   èË  .runtime.writebarrierptr   –Ì  .runtime.writebarrierptr   ÄÌ  .runtime.writebarrierptr   òÌ  .runtime.writebarrierptr   ¦Í  .runtime.writebarrierptr   ÜÍ  .runtime.writebarrierptr   šÎ  .runtime.writebarrierptr   ÈÎ  .runtime.writebarrierptr   öÎ  .runtime.writebarrierptr   ¤Ï  .runtime.writebarrierptr   ÒÏ  .runtime.writebarrierptr   †Ğ  .runtime.writebarrierptr   ¼Ğ  .runtime.writebarrierptr   úĞ  .runtime.writebarrierptr   ¨Ñ  .runtime.writebarrierptr   ÖÑ  .runtime.writebarrierptr   „Ò  .runtime.writebarrierptr   ²Ò  .runtime.writebarrierptr   æÒ  .runtime.writebarrierptr   œÓ  .runtime.writebarrierptr   ÚÓ  .runtime.writebarrierptr   ˆÔ  .runtime.writebarrierptr   ¶Ô  .runtime.writebarrierptr   äÔ  .runtime.writebarrierptr   ’Õ  .runtime.writebarrierptr   ÆÕ  .runtime.writebarrierptr   „Ö  .runtime.writebarrierptr   ²Ö  .runtime.writebarrierptr   àÖ  .runtime.writebarrierptr   ×  .runtime.writebarrierptr   ¼×  .runtime.writebarrierptr   ğ×  .runtime.writebarrierptr   ¦Ø  .runtime.writebarrierptr   äØ  .runtime.writebarrierptr   ’Ù  .runtime.writebarrierptr   ÀÙ  .runtime.writebarrierptr   îÙ  .runtime.writebarrierptr   œÚ  .runtime.writebarrierptr   ĞÚ  .runtime.writebarrierptr   †Û  .runtime.writebarrierptr   ªÛ  $runtime.panicindex   ÊÛ  .runtime.writebarrierptr   ˆÜ  .runtime.writebarrierptr   ¶Ü  .runtime.writebarrierptr   äÜ  .runtime.writebarrierptr   ’İ  .runtime.writebarrierptr   Àİ  .runtime.writebarrierptr   ôİ  .runtime.writebarrierptr   ²Ş  .runtime.writebarrierptr   àŞ  .runtime.writebarrierptr   ß  .runtime.writebarrierptr   ¼ß  .runtime.writebarrierptr   êß  .runtime.writebarrierptr   à  .runtime.writebarrierptr   Ôà  .runtime.writebarrierptr   ’á  .runtime.writebarrierptr   Àá  .runtime.writebarrierptr   îá  .runtime.writebarrierptr   œâ  .runtime.writebarrierptr   Êâ  .runtime.writebarrierptr   şâ  .runtime.writebarrierptr   ´ã  .runtime.writebarrierptr   òã  .runtime.writebarrierptr    ä  .runtime.writebarrierptr   Îä  .runtime.writebarrierptr   üä  .runtime.writebarrierptr   ªå  .runtime.writebarrierptr   Şå  .runtime.writebarrierptr   ”æ  .runtime.writebarrierptr   Òæ  .runtime.writebarrierptr   €ç  .runtime.writebarrierptr   ®ç  .runtime.writebarrierptr   Üç  .runtime.writebarrierptr   Šè  .runtime.writebarrierptr   Æè  .runtime.writebarrierptr   èè  $runtime.panicindex   é  $runtime.panicslice   Äé  4go.itab.*os.File.io.Writer   èé  os.Stderr   Æë  htype.*github.com/beego/bee/logger/colors.colorWriter   „ì  ftype.github.com/beego/bee/logger/colors.colorWriter   –ì  "runtime.newobject   ÊìÈ  runtime.duffzero   †í (runtime.writeBarrier   Æí  ‚go.itab.*github.com/beego/bee/logger/colors.colorWriter.io.Writer   Öî  htype.*github.com/beego/bee/logger/colors.colorWriter   ìî  type.io.Writer   „ï  ‚go.itab.*github.com/beego/bee/logger/colors.colorWriter.io.Writer   ˜ï   runtime.typ2Itab   Êï  .runtime.writebarrierptr   ˜ğ  type.*os.File   ®ğ  type.io.Writer   Æğ  4go.itab.*os.File.io.Writer   Úğ   runtime.typ2Itab   øğ  0runtime.morestack_noctxt   Pà,  ¨"".autotmp_0392 Ÿ$type.[2]string "".autotmp_0391  type.*[2]string "".autotmp_0389  type.[]string "".autotmp_0388  "type.interface {} "".autotmp_0387  "type.interface {} "".autotmp_0386  "type.interface {} "".autotmp_0385  "type.interface {} "".autotmp_0384  "type.interface {} "".autotmp_0383 ß(type.[5]interface {} "".autotmp_0381  *type.*[5]interface {} "".autotmp_0380  &type.[]interface {} "".autotmp_0379 ß#type.[2]string "".autotmp_0378  type.*[2]string "".autotmp_0376  type.[]string "".autotmp_0375 Ÿtype.[3]string "".autotmp_0374  type.*[3]string "".autotmp_0372  type.[]string "".autotmp_0371  "type.interface {} "".autotmp_0370  "type.interface {} "".autotmp_0369  "type.interface {} "".autotmp_0368  "type.interface {} "".autotmp_0367  "type.interface {} "".autotmp_0366 ¿(type.[5]interface {} "".autotmp_0364  *type.*[5]interface {} "".autotmp_0363  &type.[]interface {} "".autotmp_0362 ¿type.[3]string "".autotmp_0361  type.*[3]string "".autotmp_0359  type.[]string "".autotmp_0358 ßtype.[3]string "".autotmp_0357  type.*[3]string "".autotmp_0355  type.[]string "".autotmp_0354  "type.interface {} "".autotmp_0353  "type.interface {} "".autotmp_0352  "type.interface {} "".autotmp_0351  "type.interface {} "".autotmp_0350  "type.interface {} "".autotmp_0349 Ÿ(type.[5]interface {} "".autotmp_0347  *type.*[5]interface {} "".autotmp_0346  &type.[]interface {} "".autotmp_0345 ÿtype.[3]string "".autotmp_0344  type.*[3]string "".autotmp_0342  type.[]string "".autotmp_0341 Ÿtype.[3]string "".autotmp_0340  type.*[3]string "".autotmp_0338  type.[]string "".autotmp_0337  "type.interface {} "".autotmp_0336  "type.interface {} "".autotmp_0335  "type.interface {} "".autotmp_0334  "type.interface {} "".autotmp_0333  "type.interface {} "".autotmp_0332 ÿ(type.[5]interface {} "".autotmp_0330  *type.*[5]interface {} "".autotmp_0329  &type.[]interface {} "".autotmp_0328 ¿type.[3]string "".autotmp_0327  type.*[3]string "".autotmp_0325  type.[]string "".autotmp_0324 ßtype.[3]string "".autotmp_0323  type.*[3]string "".autotmp_0321  type.[]string "".autotmp_0320  "type.interface {} "".autotmp_0319  "type.interface {} "".autotmp_0318  "type.interface {} "".autotmp_0317  "type.interface {} "".autotmp_0316  "type.interface {} "".autotmp_0315 ß(type.[5]interface {} "".autotmp_0313  *type.*[5]interface {} "".autotmp_0312  &type.[]interface {} "".autotmp_0311 ÿtype.[3]string "".autotmp_0310  type.*[3]string "".autotmp_0308  type.[]string "".autotmp_0307 Ÿtype.[3]string "".autotmp_0306  type.*[3]string "".autotmp_0304  type.[]string "".autotmp_0303  "type.interface {} "".autotmp_0302  "type.interface {} "".autotmp_0301  "type.interface {} "".autotmp_0300  "type.interface {} "".autotmp_0299  "type.interface {} "".autotmp_0298 ¿(type.[5]interface {} "".autotmp_0296  *type.*[5]interface {} "".autotmp_0295  &type.[]interface {} "".autotmp_0294 ¿type.[3]string "".autotmp_0293  type.*[3]string "".autotmp_0291  type.[]string "".autotmp_0290 ßtype.[3]string "".autotmp_0289  type.*[3]string "".autotmp_0287  type.[]string "".autotmp_0286  "type.interface {} "".autotmp_0285  "type.interface {} "".autotmp_0284  "type.interface {} "".autotmp_0283  "type.interface {} "".autotmp_0282  "type.interface {} "".autotmp_0281 Ÿ(type.[5]interface {} "".autotmp_0279  *type.*[5]interface {} "".autotmp_0278  &type.[]interface {} "".autotmp_0277 ÿtype.[3]string "".autotmp_0276  type.*[3]string "".autotmp_0274  type.[]string "".autotmp_0273  "type.interface {} "".autotmp_0272  "type.interface {} "".autotmp_0271  "type.interface {} "".autotmp_0270  "type.interface {} "".autotmp_0269  "type.interface {} "".autotmp_0268 ÿ	(type.[5]interface {} "".autotmp_0266  *type.*[5]interface {} "".autotmp_0265  &type.[]interface {} "".autotmp_0264 Ÿ#type.[2]string "".autotmp_0263  type.*[2]string "".autotmp_0261  type.[]string "".autotmp_0260 ß"type.[2]string "".autotmp_0259  type.*[2]string "".autotmp_0257  type.[]string "".autotmp_0256  "type.interface {} "".autotmp_0255  "type.interface {} "".autotmp_0254  "type.interface {} "".autotmp_0253  "type.interface {} "".autotmp_0252  "type.interface {} "".autotmp_0251 ß(type.[5]interface {} "".autotmp_0249  *type.*[5]interface {} "".autotmp_0248  &type.[]interface {} "".autotmp_0247 Ÿ"type.[2]string "".autotmp_0246  type.*[2]string "".autotmp_0244  type.[]string "".autotmp_0243 ß!type.[2]string "".autotmp_0242  type.*[2]string "".autotmp_0240  type.[]string "".autotmp_0239  "type.interface {} "".autotmp_0238 ß((type.[1]interface {} "".autotmp_0236  *type.*[1]interface {} "".autotmp_0235  &type.[]interface {} "".autotmp_0234  "type.interface {} "".autotmp_0233 ¿((type.[1]interface {} "".autotmp_0231  *type.*[1]interface {} "".autotmp_0230  &type.[]interface {} "".autotmp_0229  "type.interface {} "".autotmp_0228 Ÿ((type.[1]interface {} "".autotmp_0226  *type.*[1]interface {} "".autotmp_0225  &type.[]interface {} "".autotmp_0224 Ÿ!type.[2]string "".autotmp_0223  type.*[2]string "".autotmp_0221  type.[]string "".autotmp_0220  "type.interface {} "".autotmp_0219  "type.interface {} "".autotmp_0218  "type.interface {} "".autotmp_0217  "type.interface {} "".autotmp_0216  "type.interface {} "".autotmp_0215 ¿(type.[5]interface {} "".autotmp_0213  *type.*[5]interface {} "".autotmp_0212  &type.[]interface {} "".autotmp_0211 ß type.[2]string "".autotmp_0210  type.*[2]string "".autotmp_0208  type.[]string "".autotmp_0207 Ÿtype.[3]string "".autotmp_0206  type.*[3]string "".autotmp_0204  type.[]string "".autotmp_0203  "type.interface {} "".autotmp_0202  "type.interface {} "".autotmp_0201  "type.interface {} "".autotmp_0200  "type.interface {} "".autotmp_0199  "type.interface {} "".autotmp_0198 Ÿ(type.[5]interface {} "".autotmp_0196  *type.*[5]interface {} "".autotmp_0195  &type.[]interface {} "".autotmp_0194 ¿type.[3]string "".autotmp_0191  type.[]string "".autotmp_0190  "type.interface {} "".autotmp_0189  "type.interface {} "".autotmp_0188  "type.interface {} "".autotmp_0187  "type.interface {} "".autotmp_0186  "type.interface {} "".autotmp_0185 ÿ(type.[5]interface {} "".autotmp_0183  *type.*[5]interface {} "".autotmp_0182  &type.[]interface {} "".autotmp_0181 Ÿ type.[2]string "".autotmp_0180  type.*[2]string "".autotmp_0178  type.[]string "".autotmp_0177 ßtype.[2]string "".autotmp_0176  type.*[2]string "".autotmp_0174  type.[]string "".autotmp_0173  "type.interface {} "".autotmp_0172  "type.interface {} "".autotmp_0171  "type.interface {} "".autotmp_0170  "type.interface {} "".autotmp_0169  "type.interface {} "".autotmp_0168 ß(type.[5]interface {} "".autotmp_0166  *type.*[5]interface {} "".autotmp_0165  &type.[]interface {} "".autotmp_0164 Ÿtype.[2]string "".autotmp_0163  type.*[2]string "".autotmp_0161  type.[]string "".autotmp_0160 ßtype.[2]string "".autotmp_0159  type.*[2]string "".autotmp_0157  type.[]string "".autotmp_0156  "type.interface {} "".autotmp_0155  "type.interface {} "".autotmp_0154  "type.interface {} "".autotmp_0153  "type.interface {} "".autotmp_0152  "type.interface {} "".autotmp_0151 ¿(type.[5]interface {} "".autotmp_0149  *type.*[5]interface {} "".autotmp_0148  &type.[]interface {} "".autotmp_0147 Ÿtype.[2]string "".autotmp_0146  type.*[2]string "".autotmp_0144  type.[]string "".autotmp_0143 ßtype.[2]string "".autotmp_0140  type.[]string "".autotmp_0139  "type.interface {} "".autotmp_0138  "type.interface {} "".autotmp_0137  "type.interface {} "".autotmp_0136  "type.interface {} "".autotmp_0135  "type.interface {} "".autotmp_0134 Ÿ(type.[5]interface {} "".autotmp_0131  &type.[]interface {} "".autotmp_0130 ÿ'"type.interface {} "".autotmp_0129 ß'(type.[1]interface {} "".autotmp_0126 ÿ$&type.[]interface {} "".autotmp_0125  type.io.Writer "".autotmp_0124  type.io.Writer "".autotmp_0123  type.*uint8 "".autotmp_0122  type.io.Writer "".autotmp_0121 ¯+htype.*github.com/beego/bee/logger/colors.colorWriter "".autotmp_0119 ¿'type.io.Writer "".autotmp_0118  type.string "".autotmp_0117  type.string "".autotmp_0116  type.string "".autotmp_0115  type.string "".autotmp_0114  type.string "".autotmp_0113  type.string "".autotmp_0112  type.string "".autotmp_0111  type.string "".autotmp_0110  type.string "".autotmp_0109  type.string "".autotmp_0108  type.string "".autotmp_0107  type.string "".autotmp_0106  type.string "".autotmp_0105  type.string "".autotmp_0104  type.string "".autotmp_0103  type.string "".autotmp_0102  type.string "".autotmp_0101  type.string "".autotmp_0100  type.string "".autotmp_0099  type.string "".autotmp_0098  type.string "".autotmp_0097  type.string "".autotmp_0096  type.string "".autotmp_0095  type.string "".autotmp_0094  type.string "".autotmp_0093  type.string "".autotmp_0092  type.string "".autotmp_0091  type.string "".autotmp_0090  type.string "".autotmp_0089  type.string "".autotmp_0088  type.string "".autotmp_0087  type.string "".autotmp_0086  type.string "".autotmp_0085  type.string "".autotmp_0084  type.string "".autotmp_0083  type.string "".autotmp_0082  type.string "".autotmp_0081  type.string "".autotmp_0080  type.string "".autotmp_0079  type.string "".autotmp_0078  type.string "".autotmp_0077  type.string "".autotmp_0076  type.string "".autotmp_0075  type.string "".autotmp_0074  type.string "".autotmp_0073  type.string "".autotmp_0072  type.string "".autotmp_0071  type.string "".autotmp_0070  type.string "".autotmp_0069  type.string "".autotmp_0068  type.string "".autotmp_0067  type.string "".autotmp_0066  type.string "".autotmp_0065  type.string "".autotmp_0064  type.string "".autotmp_0063  type.string "".autotmp_0062  type.string "".autotmp_0061  type.string "".autotmp_0060  type.string "".autotmp_0059  type.string "".autotmp_0058  type.string "".autotmp_0057  type.string "".autotmp_0056  type.string "".autotmp_0055  type.string "".autotmp_0054  type.string "".autotmp_0053  type.string "".autotmp_0052  type.string "".autotmp_0051  type.string "".autotmp_0050 Ÿ'type.string "".autotmp_0049 ÿ&type.string "".autotmp_0048  type.string "".autotmp_0047  type.string "".autotmp_0046  type.string "".autotmp_0045  type.string "".autotmp_0044  type.string "".autotmp_0043  type.string "".autotmp_0042  type.string "".autotmp_0041  type.string "".autotmp_0040  type.string "".autotmp_0039  type.string "".autotmp_0038  type.string "".autotmp_0037  type.string "".autotmp_0036  type.string "".autotmp_0035  type.string "".autotmp_0034  type.string "".autotmp_0033  type.string "".autotmp_0032  type.string "".autotmp_0031  type.string "".autotmp_0030  type.string "".autotmp_0029  type.string "".autotmp_0028  type.string "".autotmp_0027  type.string "".autotmp_0026  type.string "".autotmp_0025  type.string "".autotmp_0024 ß&type.string "".autotmp_0023 ¿&type.string "".autotmp_0022 Ÿ&type.string "".autotmp_0021 ÿ%type.string "".autotmp_0020 ß%type.string "".autotmp_0019 ¿%type.string "".autotmp_0018 Ï$type.[]string "".autotmp_0017  type.int "".autotmp_0015  htype.*github.com/beego/bee/logger/colors.colorWriter "".~r0 ß*type.io.Writer Tgithub.com/beego/bee/logger/colors.modeÂ·3 ¿+dtype.github.com/beego/bee/logger/colors.outputMode Ngithub.com/beego/bee/logger/colors.wÂ·2 Ÿ*type.io.Writer "".~r0 ÿ*type.io.Writer Ngithub.com/beego/bee/logger/colors.wÂ·2 ¿*type.io.Writer "".~r0 Ÿ+type.io.Writer  "".mainGoContent ¿)type.string "".err ÿ(type.error "".packPath ÿ)type.string "".appPath Ÿ%type.string "".err Ÿ)type.error "".output ß)type.io.Writer "".~r2 @type.int "".args type.[]string "".cmd  ^type.*github.com/beego/bee/cmd/commands.Command ")à,œFß,à,õqß, 
+Ğ¸ ¢Æ`Y%>rÔ%&ˆÍœÍœÍœ²ÍÜŒ^nPk·`8ëëë{B%EPk•*½œÍâ²Í–²Í–²Í–²Í–²ó²óœ·–•••••••••/••••zä ¶ ë
+Ã‚é›¡›¡›¡¡³F ü¡Tº_·*`Bi
+‚	i
+‚	i
+‚	{KVO_1vš›¡›"ç¡³n$B#(¡³n*B)¡³n$B#¡³n*B).¡#³Á¡³«"¡&nB1.%v!vv"-vvv'vv!vvvvvz×Áa$ TgclocalsÂ·5c78730ab64284efcd1f59f994a13ed2 TgclocalsÂ·9464055198fa4b1a54c469c38f9aea6c   zE:/GOPATH/src/github.com/beego/bee/cmd/commands/api/apiapp.goş"".glob.func1  `  `eH‹%(   H‹‰    H;avè    Ãè    ëİÌÌÌÌÌÌÌÌÌÌÌÌÌ      .  €github.com/beego/bee/cmd/commands/version.ShowShortVersionBanner   :  0runtime.morestack_noctxt   @   "".args type.[]string "".cmd  ^type.*github.com/beego/bee/cmd/commands.Command 0 0 x0 
+  TgclocalsÂ·0ebb2d1da58c1b4224bf5a7b370d7578 TgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb   zE:/GOPATH/src/github.com/beego/bee/cmd/commands/api/apiapp.goş"".init  €  €eH‹%(   H‹‰    H;ava¶    €û t¶    €ûuÃè    Æ    è    è    è    è    è    è    è    è    è    è    Æ    Ãè    ë‚ÌÌ"      2  "".initdoneÂ·   J  "".initdoneÂ·   `  "runtime.throwinit   p "".initdoneÂ·   |  fmt.init   †  os.init     $path/filepath.init   š  strings.init   ¤  Lgithub.com/beego/bee/cmd/commands.init   ®  \github.com/beego/bee/cmd/commands/version.init   ¸  Dgithub.com/beego/bee/generate.init   Â  @github.com/beego/bee/logger.init   Ì  >github.com/beego/bee/utils.init   Ö  "".init.1   â "".initdoneÂ·   ğ  0runtime.morestack_noctxt        € € 
+ü	€ 
+ /Q TgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb TgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb   zE:/GOPATH/src/github.com/beego/bee/cmd/commands/api/apiapp.goş4type..hash.[1]interface {}     eH‹%(   H‹‰    H;avpHƒì(H‹L$81ÀHÇD$   H‹l$H9è}DH‰D$ H‹\$0Hƒû t>H‰ÅHÁåHëH‰$H‰L$8H‰L$è    H‹L$H‹D$ HÿÀH‹l$H9è|¼H‰L$@HƒÄ(Ã‰ë¾è    épÿÿÿ      º  (runtime.nilinterhash     0runtime.morestack_noctxt   0P  
+"".autotmp_0397 type.int "".autotmp_0396 type.int "".~r2  type.uintptr "".h type.uintptr "".p  *type.*[1]interface {} PgOPO
+   
+ \4 TgclocalsÂ·0b86ef39f3fed835f14ba5f4d7c62fa2 TgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb   zE:/GOPATH/src/github.com/beego/bee/cmd/commands/api/apiapp.goş0type..eq.[1]interface {} €  €eH‹%(   H‹‰    H;a†Î   HƒìX1ÀHÇD$(   H‹l$(H9è’   H‰D$0H‹\$hHƒû „–   H‰ÅHÁåHëH‹H‹sH‹\$`Hƒû tvH‰ÅHÁåHëH‹H‹SH9ÈuVH‰D$8H‰$H‰T$@H‰T$H‰L$HH‰L$H‰t$PH‰t$è    ¶\$ €û t H‹D$0HÿÀH‹l$(H9èŒnÿÿÿÆD$pHƒÄXÃÆD$p HƒÄXÃ‰ë†‰écÿÿÿè    éÿÿÿÌÌÌÌÌÌÌÌÌÌÌÌÌÌ      Ê  runtime.efaceeq   Ò  0runtime.morestack_noctxt   0°  "".autotmp_0401 ?"type.interface {} "".autotmp_0400 "type.interface {} "".autotmp_0399 _type.int "".autotmp_0398 Otype.int "".~r2  type.bool "".q *type.*[1]interface {} "".p  *type.*[1]interface {} ,°´¯°	¯°¯ € €  ¤\ TgclocalsÂ·3bb21ca8fe1d99a3e492463bd711418a TgclocalsÂ·a8eabfc4a4514ed6b3b0c61e9680e440   zE:/GOPATH/src/github.com/beego/bee/cmd/commands/api/apiapp.goş4type..hash.[5]interface {}     eH‹%(   H‹‰    H;avpHƒì(H‹L$81ÀHÇD$   H‹l$H9è}DH‰D$ H‹\$0Hƒû t>H‰ÅHÁåHëH‰$H‰L$8H‰L$è    H‹L$H‹D$ HÿÀH‹l$H9è|¼H‰L$@HƒÄ(Ã‰ë¾è    épÿÿÿ      º  (runtime.nilinterhash     0runtime.morestack_noctxt   0P  
+"".autotmp_0403 type.int "".autotmp_0402 type.int "".~r2  type.uintptr "".h type.uintptr "".p  *type.*[5]interface {} PgOPO
+   
+ \4 TgclocalsÂ·0b86ef39f3fed835f14ba5f4d7c62fa2 TgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb   zE:/GOPATH/src/github.com/beego/bee/cmd/commands/api/apiapp.goş0type..eq.[5]interface {} €  €eH‹%(   H‹‰    H;a†Î   HƒìX1ÀHÇD$(   H‹l$(H9è’   H‰D$0H‹\$hHƒû „–   H‰ÅHÁåHëH‹H‹sH‹\$`Hƒû tvH‰ÅHÁåHëH‹H‹SH9ÈuVH‰D$8H‰$H‰T$@H‰T$H‰L$HH‰L$H‰t$PH‰t$è    ¶\$ €û t H‹D$0HÿÀH‹l$(H9èŒnÿÿÿÆD$pHƒÄXÃÆD$p HƒÄXÃ‰ë†‰écÿÿÿè    éÿÿÿÌÌÌÌÌÌÌÌÌÌÌÌÌÌ      Ê  runtime.efaceeq   Ò  0runtime.morestack_noctxt   0°  "".autotmp_0407 ?"type.interface {} "".autotmp_0406 "type.interface {} "".autotmp_0405 _type.int "".autotmp_0404 Otype.int "".~r2  type.bool "".q *type.*[5]interface {} "".p  *type.*[5]interface {} ,°´¯°	¯°¯ € €  ¤\ TgclocalsÂ·3bb21ca8fe1d99a3e492463bd711418a TgclocalsÂ·a8eabfc4a4514ed6b3b0c61e9680e440   zE:/GOPATH/src/github.com/beego/bee/cmd/commands/api/apiapp.goş(type..hash.[2]string     eH‹%(   H‹‰    H;avpHƒì(H‹L$81ÀHÇD$   H‹l$H9è}DH‰D$ H‹\$0Hƒû t>H‰ÅHÁåHëH‰$H‰L$8H‰L$è    H‹L$H‹D$ HÿÀH‹l$H9è|¼H‰L$@HƒÄ(Ã‰ë¾è    épÿÿÿ      º  runtime.strhash     0runtime.morestack_noctxt   0P  
+"".autotmp_0409 type.int "".autotmp_0408 type.int "".~r2  type.uintptr "".h type.uintptr "".p  type.*[2]string PgOPO
+   
+ \4 TgclocalsÂ·0b86ef39f3fed835f14ba5f4d7c62fa2 TgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb   zE:/GOPATH/src/github.com/beego/bee/cmd/commands/api/apiapp.goş$type..eq.[2]string €  €eH‹%(   H‹‰    H;a†Î   HƒìX1ÀHÇD$(   H‹l$(H9è’   H‰D$0H‹\$`Hƒû „–   H‰ÅHÁåHëH‹3H‹KH‹\$hHƒû tvH‰ÅHÁåHëH‹H‹CH9ÁuVH‰t$HH‰4$H‰L$PH‰L$H‰T$8H‰T$H‰D$@H‰D$è    ¶\$ €û t H‹D$0HÿÀH‹l$(H9èŒnÿÿÿÆD$pHƒÄXÃÆD$p HƒÄXÃ‰ë†‰écÿÿÿè    éÿÿÿÌÌÌÌÌÌÌÌÌÌÌÌÌÌ      Ê   runtime.eqstring   Ò  0runtime.morestack_noctxt   0°  "".autotmp_0413 ?type.string "".autotmp_0412 type.string "".autotmp_0411 _type.int "".autotmp_0410 Otype.int "".~r2  type.bool "".q type.*[2]string "".p  type.*[2]string ,°´¯°	¯°¯ € €  ¤\ TgclocalsÂ·3bb21ca8fe1d99a3e492463bd711418a TgclocalsÂ·a8eabfc4a4514ed6b3b0c61e9680e440   zE:/GOPATH/src/github.com/beego/bee/cmd/commands/api/apiapp.goş(type..hash.[3]string     eH‹%(   H‹‰    H;avpHƒì(H‹L$81ÀHÇD$   H‹l$H9è}DH‰D$ H‹\$0Hƒû t>H‰ÅHÁåHëH‰$H‰L$8H‰L$è    H‹L$H‹D$ HÿÀH‹l$H9è|¼H‰L$@HƒÄ(Ã‰ë¾è    épÿÿÿ      º  runtime.strhash     0runtime.morestack_noctxt   0P  
+"".autotmp_0415 type.int "".autotmp_0414 type.int "".~r2  type.uintptr "".h type.uintptr "".p  type.*[3]string PgOPO
+   
+ \4 TgclocalsÂ·0b86ef39f3fed835f14ba5f4d7c62fa2 TgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb   zE:/GOPATH/src/github.com/beego/bee/cmd/commands/api/apiapp.goş$type..eq.[3]string €  €eH‹%(   H‹‰    H;a†Î   HƒìX1ÀHÇD$(   H‹l$(H9è’   H‰D$0H‹\$`Hƒû „–   H‰ÅHÁåHëH‹3H‹KH‹\$hHƒû tvH‰ÅHÁåHëH‹H‹CH9ÁuVH‰t$HH‰4$H‰L$PH‰L$H‰T$8H‰T$H‰D$@H‰D$è    ¶\$ €û t H‹D$0HÿÀH‹l$(H9èŒnÿÿÿÆD$pHƒÄXÃÆD$p HƒÄXÃ‰ë†‰écÿÿÿè    éÿÿÿÌÌÌÌÌÌÌÌÌÌÌÌÌÌ      Ê   runtime.eqstring   Ò  0runtime.morestack_noctxt   0°  "".autotmp_0419 ?type.string "".autotmp_0418 type.string "".autotmp_0417 _type.int "".autotmp_0416 Otype.int "".~r2  type.bool "".q type.*[3]string "".p  type.*[3]string ,°´¯°	¯°¯ € €  ¤\ TgclocalsÂ·3bb21ca8fe1d99a3e492463bd711418a TgclocalsÂ·a8eabfc4a4514ed6b3b0c61e9680e440   zE:/GOPATH/src/github.com/beego/bee/cmd/commands/api/apiapp.goş>ngo.itab.*github.com/beego/bee/utils.DocValue.flag.Value     ş,go.string.hdr."tables"                       $go.string."tables"   ş$go.string."tables"   tables  şrgo.string.hdr."List of table names separated by a comma."             )          jgo.string."List of table names separated by a comma."   şjgo.string."List of table names separated by a comma." `  TList of table names separated by a comma.  ş,go.string.hdr."driver"                       $go.string."driver"   ş$go.string."driver"   driver  ş„go.string.hdr."Database driver. Either mysql, postgres or sqlite."             2          |go.string."Database driver. Either mysql, postgres or sqlite."   ş|go.string."Database driver. Either mysql, postgres or sqlite." p  fDatabase driver. Either mysql, postgres or sqlite.  ş(go.string.hdr."conn"                        go.string."conn"   ş go.string."conn"   
+conn  ş®go.string.hdr."Connection string used by the driver to connect to a database instance."             G          ¦go.string."Connection string used by the driver to connect to a database instance."   ş¦go.string."Connection string used by the driver to connect to a database instance."   Connection string used by the driver to connect to a database instance.  şTgclocalsÂ·7f1e9457ccdd59eb521cbcc8eefe7f0f (  (                 şTgclocalsÂ·7d2d5fca80364273fb07d5820a76fef4           ş>4go.itab.*os.File.io.Writer     ş>‚go.itab.*github.com/beego/bee/logger/colors.colorWriter.io.Writer     şZgo.string.hdr."Argument [appname] is missing"                       Rgo.string."Argument [appname] is missing"   şRgo.string."Argument [appname] is missing" @  <Argument [appname] is missing  ş$go.string.hdr."%s"                       go.string."%s"   şgo.string."%s"   %s  ş*go.string.hdr."mysql"                       "go.string."mysql"   ş"go.string."mysql"   mysql  ş>go.string.hdr."Creating API..."                       6go.string."Creating API..."   ş6go.string."Creating API..."     Creating API...  ş0go.string.hdr."\x1b[32m"                       (go.string."\x1b[32m"   ş(go.string."\x1b[32m"   [32m  ş.go.string.hdr."\x1b[1m"                       &go.string."\x1b[1m"   ş&go.string."\x1b[1m"   
+[1m  ş0go.string.hdr."\x1b[21m"                       (go.string."\x1b[21m"   ş(go.string."\x1b[21m"   [21m  ş.go.string.hdr."\x1b[0m"                       &go.string."\x1b[0m"   ş&go.string."\x1b[0m"   
+[0m  şNgo.string.hdr."\t%s%screate%s\t %s%s\n"                       Fgo.string."\t%s%screate%s\t %s%s\n"   şFgo.string."\t%s%screate%s\t %s%s\n" 0  *	%s%screate%s	 %s%s
+  ş(go.string.hdr."conf"                        go.string."conf"   ş go.string."conf"   
+conf  ş6go.string.hdr."controllers"                       .go.string."controllers"   ş.go.string."controllers"    controllers  ş*go.string.hdr."tests"                       "go.string."tests"   ş"go.string."tests"   tests  ş0go.string.hdr."app.conf"                       (go.string."app.conf"   ş(go.string."app.conf"    app.conf  ş8go.string.hdr."{{.Appname}}"                       0go.string."{{.Appname}}"   ş0go.string."{{.Appname}}"    {{.Appname}}  ş.go.string.hdr."main.go"                       &go.string."main.go"   ş&go.string."main.go"   main.go  ş>go.string.hdr."{{.DriverName}}"                       6go.string."{{.DriverName}}"   ş6go.string."{{.DriverName}}"     {{.DriverName}}  ş<go.string.hdr."{{.DriverPkg}}"                       4go.string."{{.DriverPkg}}"   ş4go.string."{{.DriverPkg}}"    {{.DriverPkg}}  şhgo.string.hdr."_ \"github.com/go-sql-driver/mysql\""             "          `go.string."_ \"github.com/go-sql-driver/mysql\""   ş`go.string."_ \"github.com/go-sql-driver/mysql\"" P  F_ "github.com/go-sql-driver/mysql"  ş0go.string.hdr."postgres"                       (go.string."postgres"   ş(go.string."postgres"    postgres  şNgo.string.hdr."_ \"github.com/lib/pq\""                       Fgo.string."_ \"github.com/lib/pq\""   şFgo.string."_ \"github.com/lib/pq\"" 0  ,_ "github.com/lib/pq"  ş2go.string.hdr."{{.conn}}"             	          *go.string."{{.conn}}"   ş*go.string."{{.conn}}"    {{.conn}}  şLgo.string.hdr."Using '%s' as 'driver'"                       Dgo.string."Using '%s' as 'driver'"   şDgo.string."Using '%s' as 'driver'" 0  .Using '%s' as 'driver'  şHgo.string.hdr."Using '%s' as 'conn'"                       @go.string."Using '%s' as 'conn'"   ş@go.string."Using '%s' as 'conn'" 0  *Using '%s' as 'conn'  şLgo.string.hdr."Using '%s' as 'tables'"                       Dgo.string."Using '%s' as 'tables'"   şDgo.string."Using '%s' as 'tables'" 0  .Using '%s' as 'tables'  ş"go.string.hdr."3"                       go.string."3"   şgo.string."3"   3  ş,go.string.hdr."models"                       $go.string."models"   ş$go.string."models"   models  ş.go.string.hdr."routers"                       &go.string."routers"   ş&go.string."routers"   routers  ş$go.string.hdr."\\"                       go.string."\\"   şgo.string."\\"   \  ş2go.string.hdr."object.go"             	          *go.string."object.go"   ş*go.string."object.go"    object.go  ş.go.string.hdr."user.go"                       &go.string."user.go"   ş&go.string."user.go"   user.go  ş>go.string.hdr."default_test.go"                       6go.string."default_test.go"   ş6go.string."default_test.go"     default_test.go  ş2go.string.hdr."router.go"             	          *go.string."router.go"   ş*go.string."router.go"    router.go  şZgo.string.hdr."New API successfully created!"                       Rgo.string."New API successfully created!"   şRgo.string."New API successfully created!" @  <New API successfully created!  şTgclocalsÂ·9464055198fa4b1a54c469c38f9aea6c Ø(  Ø(;   [                                                àg   ªªªª   ªªªªªªªªª àÿÿÿÿÿÿÿÿÿÿÿÿ       àg   ªªªª   ªªªªªªªªª àÿÿÿÿÿÿÿÿÿÿÿÿ       àg   ªªªª   ªªªªªªªªª àÿÿÿÿÿÿÿÿÿÿÿÿ       `àg   ªªªª   ªªªªªªªªª àÿÿÿÿÿÿÿÿÿÿÿÿ       hàg  
+ªªªª   ªªªªªªªªª àÿÿÿÿÿÿÿÿÿÿÿÿ       hàg  ªªªª   ªªªªªªªªª àÿÿÿÿÿÿÿÿÿÿÿÿ       hàg *
+ªªªª   ªªªªªªªªª àÿÿÿÿÿÿÿÿÿÿÿÿ    ş hàg *ªªªª   ªªªªªªªªª àÿÿÿÿÿÿÿÿÿÿÿÿ    ş hàg  Bªªªª   ªªªªªªªªª àÿÿÿÿÿÿÿÿÿÿÿÿ    ş hàg  ªªªª   ªªªªªªªªª àÿÿÿÿÿÿÿÿÿÿÿÿ    ş hàg *Bªªªª  ªªªªªªªªªª àÿÿÿÿÿÿÿÿÿÿÿÿ    ş hàg *ªªªª  ªªªªªªªªªª àÿÿÿÿÿÿÿÿÿÿÿÿ    ş hàg *
+ªªªª  ªªªªªªªªªª àÿÿÿÿÿÿÿÿÿÿÿÿ  €ÿÿ hàg *ªªªª  ªªªªªªªªªª àÿÿÿÿÿÿÿÿÿÿÿÿ  €ÿÿ hàg  Bªªªª  ªªªªªªªªªª àÿÿÿÿÿÿÿÿÿÿÿÿ  €ÿÿ hàg  ªªªª  ªªªªªªªªªª àÿÿÿÿÿÿÿÿÿÿÿÿ  €ÿÿ hàg€
+Bªªªª ªªªªªªªªªªª àÿÿÿÿÿÿÿÿÿÿÿÿ  €ÿÿ hàg€
+ªªªª ªªªªªªªªªªª àÿÿÿÿÿÿÿÿÿÿÿÿ  €ÿÿ hàg *
+ªªªª ªªªªªªªªªªª àÿÿÿÿÿÿÿÿÿÿÿÿ àÿÿÿ hàg *ªªªª ªªªªªªªªªªª àÿÿÿÿÿÿÿÿÿÿÿÿ àÿÿÿ hàg  Bªªªª ªªªªªªªªªªª àÿÿÿÿÿÿÿÿÿÿÿÿ àÿÿÿ hàg  ªªªª ªªªªªªªªªªª àÿÿÿÿÿÿÿÿÿÿÿÿ àÿÿÿ hàg Bªªªªªªªªªªªªªªªª àÿÿÿÿÿÿÿÿÿÿÿÿ àÿÿÿ hàg ªªªªªªªªªªªªªªªª àÿÿÿÿÿÿÿÿÿÿÿÿ àÿÿÿ hàg *
+ªªªªªªªªªªªªªªªª àÿÿÿÿÿÿÿÿÿÿÿÿøÿÿÿÿ hàg *ªªªªªªªªªªªªªªªª àÿÿÿÿÿÿÿÿÿÿÿÿøÿÿÿÿ hàg Bªªªªªªªªªªªªªªªª€êÿÿÿÿÿÿÿÿÿÿÿÿøÿÿÿÿ hàg ªªªªªªªªªªªªªªªª€êÿÿÿÿÿÿÿÿÿÿÿÿøÿÿÿÿ hàg *
+ªªªªªªªªªªªªªªªª€êÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ hàg *ªªªªªªªªªªªªªªªª€êÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ hàg  Bªªªªªªªªªªªªªªªªªêÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ hàg  ªªªªªªªªªªªªªªªªªêÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ  àg   ªªªªªªªªªªªªªªªªªêÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ hàg €ªªªªªªªªªªªªªªªªªêÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ hàg  Bªªªªªªªªªªªªªªªªªêÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ hàg  ªªªªªªªªªªªªªªªªªêÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ hàg *
+ªªªªªªªªªªªªªªªªªêÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ àg *ªªªªªªªªªªªªªªªªªêÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ  àg  ªªªªªªªªªªªªªªªªªêÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ €àg  ªªªªªªªªªªªªªªªªªêÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ €àg  Bªªªªªªªªªªªªªªªªªêÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ €àg ªªªªªªªªªªªªªªªªªêÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ  àg ªªªªªªªªªªªªªªªªªêÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ  àg  
+ªªªªªªªªªªªªªªªªªêÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ hàg 
+Bªªªªªªªªªªªªªªªªªêÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ hàg 
+ªªªªªªªªªªªªªªªªªêÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ hàg *ªªªªªªªªªªªªªªªªªêÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ hàg Bªªªªªªªªªªªªªªªªªêÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ hàg ªªªªªªªªªªªªªªªªªêÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ hàg ªªªªªªªªªªªªªªªªªêÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ hàg€(Bªªªªªªªªªªªªªªªªªêÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ hàg€(ªªªªªªªªªªªªªªªªªêÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ hàg ªªªªªªªªªªªªªªªªªêÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ hàg *Bªªªªªªªªªªªªªªªªªêÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ hàg *ªªªªªªªªªªªªªªªªªêÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ àg  @ªªªªªªªªªªªªªªªªªêÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ àg   ªªªªªªªªªªªªªªªªªêÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ  àg  ªªªªªªªªªªªªªªªªªêÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿÿ şTgclocalsÂ·5c78730ab64284efcd1f59f994a13ed2 è  è;                                                                                                                                                                                        şTgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb           şTgclocalsÂ·0ebb2d1da58c1b4224bf5a7b370d7578             ş$"".hdr..gostring.1             q          ""..gostring.1   ş""..gostring.1 ğ  äappname = {{.Appname}}
+httpport = 8080
+runmode = dev
+autorender = false
+copyrequestbody = true
+EnableDocs = true
+  ş$"".hdr..gostring.2             î         ""..gostring.2   ş""..gostring.2 à#  Ş#package controllers
+
+import (
+	"{{.Appname}}/models"
+	"encoding/json"
+
+	"github.com/astaxie/beego"
+)
+
+// Operations about object
+type ObjectController struct {
+	beego.Controller
+}
+
+// @Title Create
+// @Description create object
+// @Param	body		body 	models.Object	true		"The object content"
+// @Success 200 {string} models.Object.Id
+// @Failure 403 body is empty
+// @router / [post]
+func (o *ObjectController) Post() {
+	var ob models.Object
+	json.Unmarshal(o.Ctx.Input.RequestBody, &ob)
+	objectid := models.AddOne(ob)
+	o.Data["json"] = map[string]string{"ObjectId": objectid}
+	o.ServeJSON()
+}
+
+// @Title Get
+// @Description find object by objectid
+// @Param	objectId		path 	string	true		"the objectid you want to get"
+// @Success 200 {object} models.Object
+// @Failure 403 :objectId is empty
+// @router /:objectId [get]
+func (o *ObjectController) Get() {
+	objectId := o.Ctx.Input.Param(":objectId")
+	if objectId != "" {
+		ob, err := models.GetOne(objectId)
+		if err != nil {
+			o.Data["json"] = err.Error()
+		} else {
+			o.Data["json"] = ob
+		}
+	}
+	o.ServeJSON()
+}
+
+// @Title GetAll
+// @Description get all objects
+// @Success 200 {object} models.Object
+// @Failure 403 :objectId is empty
+// @router / [get]
+func (o *ObjectController) GetAll() {
+	obs := models.GetAll()
+	o.Data["json"] = obs
+	o.ServeJSON()
+}
+
+// @Title Update
+// @Description update the object
+// @Param	objectId		path 	string	true		"The objectid you want to update"
+// @Param	body		body 	models.Object	true		"The body"
+// @Success 200 {object} models.Object
+// @Failure 403 :objectId is empty
+// @router /:objectId [put]
+func (o *ObjectController) Put() {
+	objectId := o.Ctx.Input.Param(":objectId")
+	var ob models.Object
+	json.Unmarshal(o.Ctx.Input.RequestBody, &ob)
+
+	err := models.Update(objectId, ob.Score)
+	if err != nil {
+		o.Data["json"] = err.Error()
+	} else {
+		o.Data["json"] = "update success!"
+	}
+	o.ServeJSON()
+}
+
+// @Title Delete
+// @Description delete the object
+// @Param	objectId		path 	string	true		"The objectId you want to delete"
+// @Success 200 {string} delete success!
+// @Failure 403 objectId is empty
+// @router /:objectId [delete]
+func (o *ObjectController) Delete() {
+	objectId := o.Ctx.Input.Param(":objectId")
+	models.Delete(objectId)
+	o.Data["json"] = "delete success!"
+	o.ServeJSON()
+}
+
+  ş$"".hdr..gostring.3             G         ""..gostring.3   ş""..gostring.3 -  -package controllers
+
+import (
+	"{{.Appname}}/models"
+	"encoding/json"
+
+	"github.com/astaxie/beego"
+)
+
+// Operations about Users
+type UserController struct {
+	beego.Controller
+}
+
+// @Title CreateUser
+// @Description create users
+// @Param	body		body 	models.User	true		"body for user content"
+// @Success 200 {int} models.User.Id
+// @Failure 403 body is empty
+// @router / [post]
+func (u *UserController) Post() {
+	var user models.User
+	json.Unmarshal(u.Ctx.Input.RequestBody, &user)
+	uid := models.AddUser(user)
+	u.Data["json"] = map[string]string{"uid": uid}
+	u.ServeJSON()
+}
+
+// @Title GetAll
+// @Description get all Users
+// @Success 200 {object} models.User
+// @router / [get]
+func (u *UserController) GetAll() {
+	users := models.GetAllUsers()
+	u.Data["json"] = users
+	u.ServeJSON()
+}
+
+// @Title Get
+// @Description get user by uid
+// @Param	uid		path 	string	true		"The key for staticblock"
+// @Success 200 {object} models.User
+// @Failure 403 :uid is empty
+// @router /:uid [get]
+func (u *UserController) Get() {
+	uid := u.GetString(":uid")
+	if uid != "" {
+		user, err := models.GetUser(uid)
+		if err != nil {
+			u.Data["json"] = err.Error()
+		} else {
+			u.Data["json"] = user
+		}
+	}
+	u.ServeJSON()
+}
+
+// @Title Update
+// @Description update the user
+// @Param	uid		path 	string	true		"The uid you want to update"
+// @Param	body		body 	models.User	true		"body for user content"
+// @Success 200 {object} models.User
+// @Failure 403 :uid is not int
+// @router /:uid [put]
+func (u *UserController) Put() {
+	uid := u.GetString(":uid")
+	if uid != "" {
+		var user models.User
+		json.Unmarshal(u.Ctx.Input.RequestBody, &user)
+		uu, err := models.UpdateUser(uid, &user)
+		if err != nil {
+			u.Data["json"] = err.Error()
+		} else {
+			u.Data["json"] = uu
+		}
+	}
+	u.ServeJSON()
+}
+
+// @Title Delete
+// @Description delete the user
+// @Param	uid		path 	string	true		"The uid you want to delete"
+// @Success 200 {string} delete success!
+// @Failure 403 uid is empty
+// @router /:uid [delete]
+func (u *UserController) Delete() {
+	uid := u.GetString(":uid")
+	models.DeleteUser(uid)
+	u.Data["json"] = "delete success!"
+	u.ServeJSON()
+}
+
+// @Title Login
+// @Description Logs user into the system
+// @Param	username		query 	string	true		"The username for login"
+// @Param	password		query 	string	true		"The password for login"
+// @Success 200 {string} login success
+// @Failure 403 user not exist
+// @router /login [get]
+func (u *UserController) Login() {
+	username := u.GetString("username")
+	password := u.GetString("password")
+	if models.Login(username, password) {
+		u.Data["json"] = "login success"
+	} else {
+		u.Data["json"] = "user not exist"
+	}
+	u.ServeJSON()
+}
+
+// @Title logout
+// @Description Logs out current logged in user session
+// @Success 200 {string} logout success
+// @router /logout [get]
+func (u *UserController) Logout() {
+	u.Data["json"] = "logout success"
+	u.ServeJSON()
+}
+
+  ş$"".hdr..gostring.4             ½         ""..gostring.4   ş""..gostring.4 €  üpackage test
+
+import (
+	"net/http"
+	"net/http/httptest"
+	"testing"
+	"runtime"
+	"path/filepath"
+	_ "{{.Appname}}/routers"
+
+	"github.com/astaxie/beego"
+	. "github.com/smartystreets/goconvey/convey"
+)
+
+func init() {
+	_, file, _, _ := runtime.Caller(1)
+	apppath, _ := filepath.Abs(filepath.Dir(filepath.Join(file, ".." + string(filepath.Separator))))
+	beego.TestBeegoInit(apppath)
+}
+
+// TestGet is a sample to run an endpoint test
+func TestGet(t *testing.T) {
+	r, _ := http.NewRequest("GET", "/v1/object", nil)
+	w := httptest.NewRecorder()
+	beego.BeeApp.Handlers.ServeHTTP(w, r)
+
+	beego.Trace("testing", "TestGet", "Code[%d]\n%s", w.Code, w.Body.String())
+
+	Convey("Subject: Test Station Endpoint\n", t, func() {
+	        Convey("Status Code Should Be 200", func() {
+	                So(w.Code, ShouldEqual, 200)
+	        })
+	        Convey("The Result Should Not Be Empty", func() {
+	                So(w.Body.Len(), ShouldBeGreaterThan, 0)
+	        })
+	})
+}
+
+  ş$"".hdr..gostring.5             €         ""..gostring.5   ş""..gostring.5 
+  ‚
+// @APIVersion 1.0.0
+// @Title beego Test API
+// @Description beego has a very cool tools to autogenerate documents for your API
+// @Contact astaxie@gmail.com
+// @TermsOfServiceUrl http://beego.me/
+// @License Apache 2.0
+// @LicenseUrl http://www.apache.org/licenses/LICENSE-2.0.html
+package routers
+
+import (
+	"{{.Appname}}/controllers"
+
+	"github.com/astaxie/beego"
+)
+
+func init() {
+	ns := beego.NewNamespace("/v1",
+		beego.NSNamespace("/object",
+			beego.NSInclude(
+				&controllers.ObjectController{},
+			),
+		),
+		beego.NSNamespace("/user",
+			beego.NSInclude(
+				&controllers.UserController{},
+			),
+		),
+	)
+	beego.AddNamespace(ns)
+}
+  ş$"".hdr..gostring.6             å         ""..gostring.6   ş""..gostring.6 Ğ  Ìpackage models
+
+import (
+	"errors"
+	"strconv"
+	"time"
+)
+
+var (
+	Objects map[string]*Object
+)
+
+type Object struct {
+	ObjectId   string
+	Score      int64
+	PlayerName string
+}
+
+func init() {
+	Objects = make(map[string]*Object)
+	Objects["hjkhsbnmn123"] = &Object{"hjkhsbnmn123", 100, "astaxie"}
+	Objects["mjjkxsxsaa23"] = &Object{"mjjkxsxsaa23", 101, "someone"}
+}
+
+func AddOne(object Object) (ObjectId string) {
+	object.ObjectId = "astaxie" + strconv.FormatInt(time.Now().UnixNano(), 10)
+	Objects[object.ObjectId] = &object
+	return object.ObjectId
+}
+
+func GetOne(ObjectId string) (object *Object, err error) {
+	if v, ok := Objects[ObjectId]; ok {
+		return v, nil
+	}
+	return nil, errors.New("ObjectId Not Exist")
+}
+
+func GetAll() map[string]*Object {
+	return Objects
+}
+
+func Update(ObjectId string, Score int64) (err error) {
+	if v, ok := Objects[ObjectId]; ok {
+		v.Score = Score
+		return nil
+	}
+	return errors.New("ObjectId Not Exist")
+}
+
+func Delete(ObjectId string) {
+	delete(Objects, ObjectId)
+}
+
+  ş$"".hdr..gostring.7             $         ""..gostring.7   ş""..gostring.7 Ğ  Êpackage models
+
+import (
+	"errors"
+	"strconv"
+	"time"
+)
+
+var (
+	UserList map[string]*User
+)
+
+func init() {
+	UserList = make(map[string]*User)
+	u := User{"user_11111", "astaxie", "11111", Profile{"male", 20, "Singapore", "astaxie@gmail.com"}}
+	UserList["user_11111"] = &u
+}
+
+type User struct {
+	Id       string
+	Username string
+	Password string
+	Profile  Profile
+}
+
+type Profile struct {
+	Gender  string
+	Age     int
+	Address string
+	Email   string
+}
+
+func AddUser(u User) string {
+	u.Id = "user_" + strconv.FormatInt(time.Now().UnixNano(), 10)
+	UserList[u.Id] = &u
+	return u.Id
+}
+
+func GetUser(uid string) (u *User, err error) {
+	if u, ok := UserList[uid]; ok {
+		return u, nil
+	}
+	return nil, errors.New("User not exists")
+}
+
+func GetAllUsers() map[string]*User {
+	return UserList
+}
+
+func UpdateUser(uid string, uu *User) (a *User, err error) {
+	if u, ok := UserList[uid]; ok {
+		if uu.Username != "" {
+			u.Username = uu.Username
+		}
+		if uu.Password != "" {
+			u.Password = uu.Password
+		}
+		if uu.Profile.Age != 0 {
+			u.Profile.Age = uu.Profile.Age
+		}
+		if uu.Profile.Address != "" {
+			u.Profile.Address = uu.Profile.Address
+		}
+		if uu.Profile.Gender != "" {
+			u.Profile.Gender = uu.Profile.Gender
+		}
+		if uu.Profile.Email != "" {
+			u.Profile.Email = uu.Profile.Email
+		}
+		return u, nil
+	}
+	return nil, errors.New("User Not Exist")
+}
+
+func Login(username, password string) bool {
+	for _, u := range UserList {
+		if u.Username == username && u.Password == password {
+			return true
+		}
+	}
+	return false
+}
+
+func DeleteUser(uid string) {
+	delete(UserList, uid)
+}
+  ş$"".hdr..gostring.8                      ""..gostring.8   ş""..gostring.8   †package main
+
+import (
+	_ "{{.Appname}}/routers"
+
+	"github.com/astaxie/beego"
+)
+
+func main() {
+	if beego.BConfig.RunMode == "dev" {
+		beego.BConfig.WebConfig.DirectoryIndex = true
+		beego.BConfig.WebConfig.StaticDir["/swagger"] = "swagger"
+	}
+	beego.Run()
+}
+  ş$"".hdr..gostring.9             …         ""..gostring.9   ş""..gostring.9   Œpackage main
+
+import (
+	_ "{{.Appname}}/routers"
+
+	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/orm"
+	{{.DriverPkg}}
+)
+
+func init() {
+	orm.RegisterDataBase("default", "{{.DriverName}}", "{{.conn}}")
+}
+
+func main() {
+	if beego.BConfig.RunMode == "dev" {
+		beego.BConfig.WebConfig.DirectoryIndex = true
+		beego.BConfig.WebConfig.StaticDir["/swagger"] = "swagger"
+	}
+	beego.Run()
+}
+
+  ş:go.string.hdr."api [appname]"                       2go.string."api [appname]"   ş2go.string."api [appname]"    api [appname]  ş^go.string.hdr."Creates a Beego API application"                       Vgo.string."Creates a Beego API application"   şVgo.string."Creates a Beego API application" @  @Creates a Beego API application  ş&"".hdr..gostring.10                      ""..gostring.10   ş""..gostring.10 €  €
+  The command 'api' creates a Beego API application.
+
+  {{"Example:"|bold}}
+      $ bee api [appname] [-tables=""] [-driver=mysql] [-conn=root:@tcp(127.0.0.1:3306)/test]
+
+  If 'conn' argument is empty, the command will generate an example API application. Otherwise the command
+  will connect to your database and generate models based on the existing tables.
+
+  The command 'api' creates a folder named [appname] with the following structure:
+
+	    â”œâ”€â”€ main.go
+	    â”œâ”€â”€ {{"conf"|foldername}}
+	    â”‚     â””â”€â”€ app.conf
+	    â”œâ”€â”€ {{"controllers"|foldername}}
+	    â”‚     â””â”€â”€ object.go
+	    â”‚     â””â”€â”€ user.go
+	    â”œâ”€â”€ {{"routers"|foldername}}
+	    â”‚     â””â”€â”€ router.go
+	    â”œâ”€â”€ {{"tests"|foldername}}
+	    â”‚     â””â”€â”€ default_test.go
+	    â””â”€â”€ {{"models"|foldername}}
+	          â””â”€â”€ object.go
+	          â””â”€â”€ user.go
+  şTgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb           şTgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb           ş<"".CmdApiapp  ^type.*github.com/beego/bee/cmd/commands.Command            """.statictmp_0395   ş<"".apiconf   type.string          q          ""..gostring.1   ş<"".apiMaingo   type.string                   ""..gostring.8   ş< "".apiMainconngo   type.string          …         ""..gostring.9   ş<"".apirouter   type.string          €         ""..gostring.5   ş<"".APIModels   type.string          å         ""..gostring.6   ş<"".APIModels2   type.string          $         ""..gostring.7   ş<""".apiControllers   type.string          î         ""..gostring.2   ş<$"".apiControllers2   type.string          G         ""..gostring.3   ş<"".apiTests   type.string          ½         ""..gostring.4   ş""".statictmp_0141  @type.[2]string @                                   go.string."conf"   ş""".statictmp_0145  @type.[2]string @                                   go.string."conf"   ş""".statictmp_0158  @type.[2]string @                                  .go.string."controllers"   ş""".statictmp_0162  @type.[2]string @                                  .go.string."controllers"   ş""".statictmp_0175  @type.[2]string @                                  "go.string."tests"   ş""".statictmp_0179  @type.[2]string @                                  "go.string."tests"   ş""".statictmp_0192  `type.[3]string `                                                  go.string."conf"   @  (go.string."app.conf"   ş""".statictmp_0205  `type.[3]string `                                                  go.string."conf"   @  (go.string."app.conf"   ş""".statictmp_0209  @type.[2]string @                                  &go.string."main.go"   ş""".statictmp_0222  @type.[2]string @                                  &go.string."main.go"   ş""".statictmp_0241  @type.[2]string @                                  $go.string."models"   ş""".statictmp_0245  @type.[2]string @                                  $go.string."models"   ş""".statictmp_0258  @type.[2]string @                                  &go.string."routers"   ş""".statictmp_0262  @type.[2]string @                                  &go.string."routers"   ş""".statictmp_0275  `type.[3]string `                                       	          .go.string."controllers"   @  *go.string."object.go"   ş""".statictmp_0288  `type.[3]string `                                       	          .go.string."controllers"   @  *go.string."object.go"   ş""".statictmp_0292  `type.[3]string `                                                 .go.string."controllers"   @  &go.string."user.go"   ş""".statictmp_0305  `type.[3]string `                                                 .go.string."controllers"   @  &go.string."user.go"   ş""".statictmp_0309  `type.[3]string `                                                 "go.string."tests"   @  6go.string."default_test.go"   ş""".statictmp_0322  `type.[3]string `                                                 "go.string."tests"   @  6go.string."default_test.go"   ş""".statictmp_0326  `type.[3]string `                                       	          &go.string."routers"   @  *go.string."router.go"   ş""".statictmp_0339  `type.[3]string `                                       	          &go.string."routers"   @  *go.string."router.go"   ş""".statictmp_0343  `type.[3]string `                                       	          $go.string."models"   @  *go.string."object.go"   ş""".statictmp_0356  `type.[3]string `                                       	          $go.string."models"   @  *go.string."object.go"   ş""".statictmp_0360  `type.[3]string `                                                 $go.string."models"   @  &go.string."user.go"   ş""".statictmp_0373  `type.[3]string `                                                 $go.string."models"   @  &go.string."user.go"   ş""".statictmp_0377  @type.[2]string @                                  &go.string."main.go"   ş""".statictmp_0390  @type.[2]string @                                  &go.string."main.go"   ş<""".statictmp_0395  à\type.github.com/beego/bee/cmd/commands.Command €                                                            
+   2go.string."api [appname]"   @  Vgo.string."Creates a Beego API application"   `  ""..gostring.10      "".glob.func1Â·f      "".createAPIÂ·f   ş>"".initdoneÂ·  type.uint8   ş"".init.1Â·f              "".init.1   ş"".createAPIÂ·f              "".createAPI   ş "".glob.func1Â·f              "".glob.func1   ş"".initÂ·f              "".init   ş"runtime.gcbits.01    şFgo.string.hdr."[]*commands.Command"                       >go.string."[]*commands.Command"   ş>go.string."[]*commands.Command" 0  ([]*commands.Command  şbtype.[]*github.com/beego/bee/cmd/commands.Command                  æˆ                                                 
+0   runtime.algarray   @  "runtime.gcbits.01   P  Fgo.string.hdr."[]*commands.Command"   p  tgo.weak.type.*[]*github.com/beego/bee/cmd/commands.Command   €  ^type.*github.com/beego/bee/cmd/commands.Command   ş˜go.typelink.[]*commands.Command	[]*github.com/beego/bee/cmd/commands.Command              btype.[]*github.com/beego/bee/cmd/commands.Command   ş0go.string.hdr."[]string"                       (go.string."[]string"   ş(go.string."[]string"    []string  ştype.[]string                 Ó¨ó
+                                                 
+0   runtime.algarray   @  "runtime.gcbits.01   P  0go.string.hdr."[]string"   p  ,go.weak.type.*[]string   €  type.string   ş:go.typelink.[]string	[]string              type.[]string   ş"runtime.gcbits.03    ş8go.string.hdr."interface {}"                       0go.string."interface {}"   ş0go.string."interface {}"    interface {}  ş"type.interface {} °  °              çW                                                                  
+0€  runtime.algarray   @  "runtime.gcbits.03   P  8go.string.hdr."interface {}"   p  4go.weak.type.*interface {}   €° "type.interface {}   ş<go.string.hdr."[]interface {}"                       4go.string."[]interface {}"   ş4go.string."[]interface {}"    []interface {}  ş&type.[]interface {}                 p“ê/                                                 
+0   runtime.algarray   @  "runtime.gcbits.01   P  <go.string.hdr."[]interface {}"   p  8go.weak.type.*[]interface {}   €  "type.interface {}   şRgo.typelink.[]interface {}	[]interface {}              &type.[]interface {}   şTgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb           şTgclocalsÂ·0b86ef39f3fed835f14ba5f4d7c62fa2             şTgclocalsÂ·a8eabfc4a4514ed6b3b0c61e9680e440              şTgclocalsÂ·3bb21ca8fe1d99a3e492463bd711418a             ş<type..hashfunc.[1]interface {}              4type..hash.[1]interface {}   ş8type..eqfunc.[1]interface {}              0type..eq.[1]interface {}   ş2type..alg.[1]interface {}                        <type..hashfunc.[1]interface {}     8type..eqfunc.[1]interface {}   ş>go.string.hdr."[1]interface {}"                       6go.string."[1]interface {}"   ş6go.string."[1]interface {}"     [1]interface {}  ş(type.[1]interface {} °  °              P‘[ú                                                                0  2type..alg.[1]interface {}   @  "runtime.gcbits.03   P  >go.string.hdr."[1]interface {}"   p  :go.weak.type.*[1]interface {}   €  "type.interface {}     &type.[]interface {}   şVgo.typelink.[1]interface {}	[1]interface {}              (type.[1]interface {}   ş@go.string.hdr."*[1]interface {}"                       8go.string."*[1]interface {}"   ş8go.string."*[1]interface {}" 0  "*[1]interface {}  ş*type.*[1]interface {}                 ¿¨5 6                                                
+0   runtime.algarray   @  "runtime.gcbits.01   P  @go.string.hdr."*[1]interface {}"   p  <go.weak.type.**[1]interface {}   €  (type.[1]interface {}   şTgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb           şTgclocalsÂ·0b86ef39f3fed835f14ba5f4d7c62fa2             şTgclocalsÂ·a8eabfc4a4514ed6b3b0c61e9680e440              şTgclocalsÂ·3bb21ca8fe1d99a3e492463bd711418a             ş<type..hashfunc.[5]interface {}              4type..hash.[5]interface {}   ş8type..eqfunc.[5]interface {}              0type..eq.[5]interface {}   ş2type..alg.[5]interface {}                        <type..hashfunc.[5]interface {}     8type..eqfunc.[5]interface {}   ş&runtime.gcbits.ff03   ÿ ş>go.string.hdr."[5]interface {}"                       6go.string."[5]interface {}"   ş6go.string."[5]interface {}"     [5]interface {}  ş(type.[5]interface {} °  °P       P       Õ#çò                                                                0  2type..alg.[5]interface {}   @  &runtime.gcbits.ff03   P  >go.string.hdr."[5]interface {}"   p  :go.weak.type.*[5]interface {}   €  "type.interface {}     &type.[]interface {}   şVgo.typelink.[5]interface {}	[5]interface {}              (type.[5]interface {}   ş@go.string.hdr."*[5]interface {}"                       8go.string."*[5]interface {}"   ş8go.string."*[5]interface {}" 0  "*[5]interface {}  ş*type.*[5]interface {}                 ?@ 6                                                
+0   runtime.algarray   @  "runtime.gcbits.01   P  @go.string.hdr."*[5]interface {}"   p  <go.weak.type.**[5]interface {}   €  (type.[5]interface {}   şTgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb           şTgclocalsÂ·0b86ef39f3fed835f14ba5f4d7c62fa2             şTgclocalsÂ·a8eabfc4a4514ed6b3b0c61e9680e440              şTgclocalsÂ·3bb21ca8fe1d99a3e492463bd711418a             ş0type..hashfunc.[2]string              (type..hash.[2]string   ş,type..eqfunc.[2]string              $type..eq.[2]string   ş&type..alg.[2]string                        0type..hashfunc.[2]string     ,type..eqfunc.[2]string   ş"runtime.gcbits.05    ş2go.string.hdr."[2]string"             	          *go.string."[2]string"   ş*go.string."[2]string"    [2]string  ştype.[2]string °  °               PXåé                                                                0  &type..alg.[2]string   @  "runtime.gcbits.05   P  2go.string.hdr."[2]string"   p  .go.weak.type.*[2]string   €  type.string     type.[]string   ş>go.typelink.[2]string	[2]string              type.[2]string   ş4go.string.hdr."*[2]string"             
+          ,go.string."*[2]string"   ş,go.string."*[2]string"    *[2]string  ştype.*[2]string                 f< 6                                                
+0   runtime.algarray   @  "runtime.gcbits.01   P  4go.string.hdr."*[2]string"   p  0go.weak.type.**[2]string   €  type.[2]string   şTgclocalsÂ·33cdeccccebe80329f1fdbee7f5874cb           şTgclocalsÂ·0b86ef39f3fed835f14ba5f4d7c62fa2             şTgclocalsÂ·a8eabfc4a4514ed6b3b0c61e9680e440              şTgclocalsÂ·3bb21ca8fe1d99a3e492463bd711418a             ş0type..hashfunc.[3]string              (type..hash.[3]string   ş,type..eqfunc.[3]string              $type..eq.[3]string   ş&type..alg.[3]string                        0type..hashfunc.[3]string     ,type..eqfunc.[3]string   ş"runtime.gcbits.15    ş2go.string.hdr."[3]string"             	          *go.string."[3]string"   ş*go.string."[3]string"    [3]string  ştype.[3]string °  °0       (       CÙiB                                                                0  &type..alg.[3]string   @  "runtime.gcbits.15   P  2go.string.hdr."[3]string"   p  .go.weak.type.*[3]string   €  type.string     type.[]string   ş>go.typelink.[3]string	[3]string              type.[3]string   ş4go.string.hdr."*[3]string"             
+          ,go.string."*[3]string"   ş,go.string."*[3]string"    *[3]string  ştype.*[3]string                 
++é 6                                                
+0   runtime.algarray   @  "runtime.gcbits.01   P  4go.string.hdr."*[3]string"   p  0go.weak.type.**[3]string   €  type.[3]string   ş&go.string.hdr."fmt"                       go.string."fmt"   şgo.string."fmt"   fmt  ş$go.importpath.fmt.                       go.string."fmt"   ş$go.string.hdr."os"                       go.string."os"   şgo.string."os"   os  ş"go.importpath.os.                       go.string."os"   ş:go.string.hdr."path/filepath"                       2go.string."path/filepath"   ş2go.string."path/filepath"    path/filepath  ş8go.importpath.path/filepath.                       2go.string."path/filepath"   ş.go.string.hdr."strings"                       &go.string."strings"   ş&go.string."strings"   strings  ş,go.importpath.strings.                       &go.string."strings"   şbgo.string.hdr."github.com/beego/bee/cmd/commands"             !          Zgo.string."github.com/beego/bee/cmd/commands"   şZgo.string."github.com/beego/bee/cmd/commands" P  Dgithub.com/beego/bee/cmd/commands  ş`go.importpath.github.com/beego/bee/cmd/commands.             !          Zgo.string."github.com/beego/bee/cmd/commands"   şTgo.string.hdr."github.com/beego/bee/utils"                       Lgo.string."github.com/beego/bee/utils"   şLgo.string."github.com/beego/bee/utils" @  6github.com/beego/bee/utils  şRgo.importpath.github.com/beego/bee/utils.                       Lgo.string."github.com/beego/bee/utils"   şrgo.string.hdr."github.com/beego/bee/cmd/commands/version"             )          jgo.string."github.com/beego/bee/cmd/commands/version"   şjgo.string."github.com/beego/bee/cmd/commands/version" `  Tgithub.com/beego/bee/cmd/commands/version  şpgo.importpath.github.com/beego/bee/cmd/commands/version.             )          jgo.string."github.com/beego/bee/cmd/commands/version"   şVgo.string.hdr."github.com/beego/bee/logger"                       Ngo.string."github.com/beego/bee/logger"   şNgo.string."github.com/beego/bee/logger" @  8github.com/beego/bee/logger  şTgo.importpath.github.com/beego/bee/logger.                       Ngo.string."github.com/beego/bee/logger"   şZgo.string.hdr."github.com/beego/bee/generate"                       Rgo.string."github.com/beego/bee/generate"   şRgo.string."github.com/beego/bee/generate" @  <github.com/beego/bee/generate  şXgo.importpath.github.com/beego/bee/generate.                       Rgo.string."github.com/beego/bee/generate"   ş:type..hash.[1]interface {}Â·f              4type..hash.[1]interface {}   ş6type..eq.[1]interface {}Â·f              0type..eq.[1]interface {}   ş:type..hash.[5]interface {}Â·f              4type..hash.[5]interface {}   ş6type..eq.[5]interface {}Â·f              0type..eq.[5]interface {}   ş.type..hash.[2]stringÂ·f              (type..hash.[2]string   ş*type..eq.[2]stringÂ·f              $type..eq.[2]string   ş.type..hash.[3]stringÂ·f              (type..hash.[3]string   ş*type..eq.[3]stringÂ·f              $type..eq.[3]string   ÿÿgo13ld
